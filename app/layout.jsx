@@ -1,4 +1,8 @@
 import React from 'react'
+import Navbar from '@component/Navbar'
+import Carousel from '@component/Carousel'
+import Box from '@mui/material/Box'
+import '@styles/global.css'
 
 export const metadata = {
     title: "Watches",
@@ -9,9 +13,11 @@ export default function RootLayout({ children }) {
     return (
         <html lang='en'>
             <body>
-                <nav>
-                    Navbar
-                </nav>
+                <Navbar />
+
+                <Carousel />
+
+
                 <main>
                     {children}
                 </main>
@@ -19,6 +25,6 @@ export default function RootLayout({ children }) {
                     Footer
                 </footer>
             </body>
-        </html>
+        </html >
     )
 }

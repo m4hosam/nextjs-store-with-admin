@@ -1,0 +1,81 @@
+:root {
+    --fontFamily: 'Open Sans', sans-serif !important;
+
+    --bg-color: #fff;
+
+    --nav-bg-color: #fff;
+    --nav-items-hover-color: #ffbf69;
+    --nav-text-color: #4d4d4d;
+    --nav-buttons-color: #ff9f1c;
+    --nav-menu-color: #ff9f1c;
+    --nav-buttons-hover-color: #ffbf69;
+    --nav-drawer-bg-color: #f9c784;
+    --white-text-color: #ffffff;
+
+    /* Used for the lightest text color */
+    --text-color-lightest: #E3E3E3;
+    /* Used for a lighter text color */
+    --text-color-lighter: #C9D6DF;
+    /* Used for a darker text color */
+    --text-color-darker: #9ca3af;
+    /* Used for the darkest text color */
+    --text-color-darkest: #4d4d4d;
+
+    --black-text-color: #000000;
+
+
+
+    --white1: #E3E3E3;
+    --white2: #C9D6DF;
+    --white3: #9ca3af;
+    --black1: #000000;
+    --black2: #111111;
+    --black3: #1e1e1e;
+    --black4: #023047;
+    /* --black4: #3c3c3c; */
+    --black5: #4d4d4d;
+
+
+    --lightGreen: #64fcda;
+    --darkGreen: #087e8b;
+    --darkNavy: #020c1b;
+    /* The Background color*/
+    --navy: #131314;
+    /* --navy: #020c1b; */
+
+    --lightNavy: #112240;
+    --lightestNavy: #233554;
+    --navyShadow: rgba(2, 12, 27, 0.7);
+    --darkSlate: #495670;
+    --aispherePurple: #7209b7;
+    --aispherePurpleHover: #a57ef9;
+    --aisphereOrange: #EE7752;
+    --aisphereOrangeLight: #EE7780;
+    --aisphereBlue: #3266E6;
+    --aispherePink: #b5179e;
+
+
+
+    /* --lightGreen: #64fcda;
+    --darkGreen: #087e8b;
+    --darkNavy: #020c1b;
+    --navy: #0a192f;
+    --lightNavy: #112240;
+    --lightestNavy: #233554;
+    --navyShadow: rgba(2, 12, 27, 0.7);
+    --darkSlate: #495670; */
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background-color: var(--bg-color);
+    font-family: 'Open Sans', sans-serif !important;
+}
+
+p {
+    font-family: 'Open Sans', sans-serif !important;
+
+}
