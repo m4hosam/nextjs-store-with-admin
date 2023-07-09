@@ -1,4 +1,7 @@
 import React from 'react'
+import Image from 'next/image'
+import watch from '@/public/assets/watch.webp'
+
 
 export const Card = () => {
     return (
@@ -8,8 +11,9 @@ export const Card = () => {
         dark:bg-gray-800 dark:border-gray-700 m-7"
         >
             <a href="#">
-                <img className="rounded-t-lg px-6 pt-6"
-                    src="https://media.gq-magazine.co.uk/photos/6409fb2d0a046f0156dd535d/4:3/w_1440,h_1080,c_limit/Best-gold-watches-HP.jpg" alt="product image" />
+                <Image className="rounded-t-lg px-6 pt-6"
+                    src={watch}
+                    alt="product image" />
             </a>
             <a href="#">
                 <h5 className="text-xl text-center p-6 font-semibold tracking-tight text-gray-900 dark:text-white">
