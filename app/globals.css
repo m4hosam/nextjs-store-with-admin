@@ -8,6 +8,19 @@ body,
   height: 100%;
 }
 
+
+.flexCenter {
+  @apply flex justify-center items-center;
+}
+
+.flexBetween {
+  @apply flex justify-between items-center;
+}
+
+.flexStart {
+  @apply flex items-center justify-start;
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;

@@ -13,7 +13,7 @@ type props = {
 
 const FormField = ({ type, title, placeholder, state, setState }: props) => {
     return (
-        <div className="mb-5 w-72">
+        <div className="mb-5 w-full">
             <label htmlFor={title.replace(/\s+/g, '')}
                 className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
             >
