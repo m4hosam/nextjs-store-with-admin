@@ -7,7 +7,31 @@ import Image from "next/image"
 
 
 export default function AddProduct() {
-    const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => { }
+    const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        // Send form object to backend
+        try {
+            // Send form object to backend using fetch
+            const response = await fetch('/api/products/create', {
+                method: 'POST',
+                body: JSON.stringify(form),
+
+            });
+
+            if (!response.ok) {
+                // Handle any error scenarios if needed
+                console.error('Form submission failed.');
+                return;
+            }
+
+            // Form submission successful, do something with the response if needed
+            const data = await response.json();
+            console.log('Response from backend:', data);
+        } catch (error) {
+            // Handle any network or other errors
+            console.error('Error occurred while submitting the form:', error);
+        }
+    }
 
     const handleChangeImage = (e: React.ChangeEvent<HTMLInputElement>) => {
 
