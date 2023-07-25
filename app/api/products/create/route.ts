@@ -21,7 +21,7 @@ export async function POST(request: Request) {
     const imageBuffer = dataUriToBuffer(image);
 
     // Generate a unique file name (you can use a library like uuid for this)
-    const fileName = `${productName}-${Date.now()}.png`; // Assuming the image is in PNG format, you may need to adjust the extension accordingly.
+    const fileName = `${productName.split(' ').join('')}-${Date.now()}.png`; // Assuming the image is in PNG format, you may need to adjust the extension accordingly.
 
     // Define the file path where the image will be saved
     const filePath = path.join(process.cwd(), 'public', 'assets', fileName);
@@ -29,18 +29,27 @@ export async function POST(request: Request) {
     // Save the image to the file system
     fs.writeFileSync(filePath, imageBuffer);
 
-    // Create a new row in the Products table using Prisma
-    const newProduct = await prisma.products.create({
-        data: {
-            name: productName,
-            description: productDescription,
-            price: price,
-            image: '/assets/' + fileName, // Assuming fileName is the name of the saved image file
-        },
-    });
 
-    console.log(newProduct)
 
-    return new Response(JSON.stringify(productName), { status: 200 });
+    try {
+        // Create a new row in the Products table using Prisma
+        const newProduct = await prisma.products.create({
+            data: {
+                name: productName,
+                description: productDescription,
+                price: price,
+                image: '/assets/' + fileName, // Assuming fileName is the name of the saved image file
+            },
+        });
+
+        // Return the products in the response
+        return new Response(JSON.stringify({ success: true }), { status: 200 });
+    } catch (error) {
+        console.error('Error fetching products:', error);
+        return new Response(JSON.stringify({ success: false }), { status: 500 });
+    } finally {
+        // Don't forget to close the Prisma Client connection when you're done
+        await prisma.$disconnect();
+    }
 
 }
