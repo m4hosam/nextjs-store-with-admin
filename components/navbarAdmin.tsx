@@ -1,6 +1,8 @@
 "use client"
 import React, { useState } from "react";
 import { Transition } from "@headlessui/react";
+import Link from "next/link";
+
 
 export const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -19,33 +21,33 @@ export const Navbar = () => {
                         </div>
                         <div className="hidden md:block">
                             <div className="flex items-baseline space-x-4">
-                                <a
-                                    href="#"
+                                <Link
+                                    href="/admin/"
                                     className=" hover:bg-gray-700 text-white px-3 py-2 rounded-md text-sm font-medium"
                                 >
-                                    Dashboard
-                                </a>
+                                    Products
+                                </Link>
 
-                                <a
-                                    href="#"
+                                <Link
+                                    href="/admin/sales"
                                     className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
                                 >
                                     Sales
-                                </a>
+                                </Link>
 
-                                <a
-                                    href="#"
-                                    className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-                                >
-                                    Products
-                                </a>
-
-                                <a
-                                    href="#"
+                                <Link
+                                    href="/admin/orders"
                                     className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
                                 >
                                     Orders
-                                </a>
+                                </Link>
+
+                                <Link
+                                    href="/admin/dashboard"
+                                    className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                                >
+                                    Dashboard
+                                </Link>
                             </div>
                         </div>
                         <button type="button" className="flex mr-3 text-sm bg-gray-800 rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
@@ -112,40 +114,33 @@ export const Navbar = () => {
                 {(ref) => (
                     <div className="md:hidden" id="mobile-menu">
                         <div ref={ref} className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                            <a
-                                href="#"
+                            <Link
+                                href="/admin"
                                 className="hover:bg-gray-700 text-white block px-3 py-2 rounded-md text-base font-medium"
                             >
-                                Dashboard
-                            </a>
-
-                            <a
-                                href="#"
-                                className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-                            >
-                                Team
-                            </a>
-
-                            <a
-                                href="#"
-                                className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-                            >
                                 Projects
-                            </a>
+                            </Link>
 
-                            <a
-                                href="#"
+                            <Link
+                                href="/admin/sales"
                                 className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
                             >
-                                Calendar
-                            </a>
+                                Sales
+                            </Link>
 
-                            <a
-                                href="#"
+                            <Link
+                                href="/admin/orders"
                                 className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
                             >
-                                Reports
-                            </a>
+                                Orders
+                            </Link>
+
+                            <Link
+                                href="/admin/dashboard"
+                                className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+                            >
+                                Dashboard
+                            </Link>
                         </div>
                     </div>
                 )}

@@ -5,6 +5,7 @@ import { SearchBar } from "@/components/ui/searchBar";
 import axios from "axios";
 
 type CardProps = {
+    id: string;
     name: string;
     description: string;
     price: string;
@@ -36,6 +37,7 @@ export default function Home() {
                         products.map((product, index) => (
                             <Card
                                 key={index}
+                                id={product.id}
                                 name={product.name}
                                 description={product.description}
                                 price={product.price}
