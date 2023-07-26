@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import { Button } from "@/components/ui/button"
-import { Card } from '@/components/Card-Admin'
+import { Card } from '@/components/cardAdmin'
 import { SearchBar } from '@/components/ui/searchBar'
 import Link from 'next/link'
 

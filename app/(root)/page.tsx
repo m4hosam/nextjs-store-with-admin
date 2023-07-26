@@ -1,6 +1,6 @@
 "use client"
 import { useEffect, useState } from "react";
-import { Card } from "@/components/Card";
+import { Card } from "@/components/card";
 import { SearchBar } from "@/components/ui/searchBar";
 import axios from "axios";
 

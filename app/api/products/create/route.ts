@@ -17,6 +17,8 @@ const prisma = new PrismaClient()
 export async function POST(request: Request) {
     const { image, productName, productDescription, price } = await request.json();
 
+    // The name of the image shouldn't contain % sign
+
     // Convert the Data URL to a buffer
     const imageBuffer = dataUriToBuffer(image);
 
