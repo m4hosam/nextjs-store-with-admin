@@ -2,8 +2,11 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button"
-import FormField from "@/components/ui/FormField"
+import FormField from "@/components/ui/formField"
 import Image from "next/image"
+import { FormState } from '@/common.types';
+import { categoryFilters } from '@/constant';
+import CustomMenu from '@/components/ui/customMenu';
 
 
 export default function AddProduct() {
@@ -63,12 +66,12 @@ export default function AddProduct() {
         reader.readAsDataURL(file);
         reader.onload = () => {
             const result = reader.result as string;
-            handelStateChange('image', result)
+            handleStateChange('image', result)
         };
     }
 
 
-    const handelStateChange = (state: string, value: string) => {
+    const handleStateChange = (state: string, value: string) => {
 
         setform({
             ...form,
@@ -77,11 +80,13 @@ export default function AddProduct() {
     }
 
 
-    const [form, setform] = useState({
-        image: '',
+    const [form, setform] = useState<FormState>({
         productName: '',
-        productDescription: '',
+        category: '',
         price: '',
+        image: '',
+        stock_price: '',
+        brand: '',
     })
 
     return (
@@ -133,32 +138,48 @@ export default function AddProduct() {
             </div>
 
 
+            <FormField
+                title="Brand Name"
+                type="text"
+                state={form.brand}
+                placeholder="Brand Name"
+                setState={(value) => { handleStateChange('brand', value) }}
 
-
+            />
             <FormField
                 title="Product Name"
                 state={form.productName}
                 type="text"
                 placeholder="Product Name"
-                setState={(value) => { handelStateChange('productName', value) }}
+                setState={(value) => { handleStateChange('productName', value) }}
 
             />
-            <FormField
-                title="Product Description"
-                state={form.productDescription}
-                type="text"
-                placeholder="Product Description"
-                setState={(value) => { handelStateChange('productDescription', value) }}
-
+            {/* Add category menu */}
+            <CustomMenu
+                title="Category"
+                state={form.category}
+                filters={categoryFilters}
+                setState={(value) => handleStateChange('category', value)}
             />
+
+
             <FormField
                 title="Price"
                 type="number"
                 state={form.price}
                 placeholder="Price"
-                setState={(value) => { handelStateChange('price', value) }}
+                setState={(value) => { handleStateChange('price', value) }}
 
             />
+            <FormField
+                title="Stock Price"
+                type="number"
+                state={form.stock_price}
+                placeholder="Stock Price"
+                setState={(value) => { handleStateChange('stock_price', value) }}
+
+            />
+
 
 
 

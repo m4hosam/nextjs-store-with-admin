@@ -2,6 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import dataUriToBuffer from 'data-uri-to-buffer';
 import { PrismaClient } from '@prisma/client'
+import { FormState } from '@/common.types';
 
 const prisma = new PrismaClient()
 
@@ -15,7 +16,7 @@ const prisma = new PrismaClient()
 
 
 export async function POST(request: Request) {
-    const { image, productName, productDescription, price } = await request.json();
+    const { productName, brand, category, stock_price, image, price }: FormState = await request.json();
 
     // The name of the image shouldn't contain % sign
 
@@ -38,8 +39,10 @@ export async function POST(request: Request) {
         const newProduct = await prisma.products.create({
             data: {
                 name: productName,
-                description: productDescription,
-                price: price,
+                brand: brand,
+                category: category,
+                stock_price: parseFloat(stock_price),
+                price: parseFloat(price),
                 image: '/assets/' + fileName, // Assuming fileName is the name of the saved image file
             },
         });

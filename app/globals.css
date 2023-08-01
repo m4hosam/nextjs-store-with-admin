@@ -6,6 +6,11 @@ html,
 body,
 :root {
   height: 100%;
+
+}
+
+body {
+  font-family: 'Tajawal', sans-serif;
 }
 
 
@@ -20,6 +25,7 @@ body,
 .flexStart {
   @apply flex items-center justify-start;
 }
+
 
 @layer base {
   :root {

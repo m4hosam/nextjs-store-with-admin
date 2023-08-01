@@ -1,29 +1,13 @@
-"use client"
-import { useEffect, useState } from "react";
 import { Card } from "@/components/card";
 import { SearchBar } from "@/components/ui/searchBar";
-import axios from "axios";
+import { productSchema } from "@/common.types";
+import { getProducts } from "@/lib/actions";
+import { Key } from "react";
 
-type CardProps = {
-    id: string;
-    name: string;
-    description: string;
-    price: string;
-    image: string;
-};
+export default async function Home() {
 
-export default function Home() {
-    const [products, setProducts] = useState<CardProps[]>([]);
-    const [loading, setLoading] = useState(false);
-
-    useEffect(() => {
-        setLoading(true);
-        axios.get('/api/products/read').then((response) => {
-            console.log(response.data);
-            setProducts(response.data);
-            setLoading(false);
-        });
-    }, []);
+    const products = await getProducts()
+    // console.log(products)
 
     return (
         <main>
@@ -31,20 +15,18 @@ export default function Home() {
                 <h1 className='text-3xl w-full text-center font-bold'>Products</h1>
                 <SearchBar />
                 <div className='flex w-full flex-row flex-wrap justify-center px-7'>
-                    {loading ? (
-                        <p>Loading...</p>
-                    ) : (
-                        products.map((product, index) => (
+                    {
+                        products?.map((product: { id: string; name: string; brand: string; price: string; image: string; }, index: Key | null | undefined) => (
                             <Card
                                 key={index}
                                 id={product.id}
                                 name={product.name}
-                                description={product.description}
+                                brand={product.brand}
                                 price={product.price}
                                 image={product.image}
                             />
                         ))
-                    )}
+                    }
                 </div>
             </section>
         </main>

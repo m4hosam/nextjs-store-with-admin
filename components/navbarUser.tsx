@@ -36,14 +36,14 @@ export const Navbar = () => {
                                 </Link>
 
                                 <Link
-                                    href="/admin/accessories"
+                                    href="/products/accessories"
                                     className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
                                 >
                                     Accessories
                                 </Link>
 
                                 <Link
-                                    href="/admin/category"
+                                    href="/products/category"
                                     className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
                                 >
                                     Category
@@ -129,14 +129,14 @@ export const Navbar = () => {
                             </Link>
 
                             <Link
-                                href="/admin/accessories"
+                                href="/products/accessories"
                                 className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
                             >
                                 Accessories
                             </Link>
 
                             <Link
-                                href="/admin/category"
+                                href="/products/category"
                                 className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
                             >
                                 Category
