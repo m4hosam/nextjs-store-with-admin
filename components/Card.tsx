@@ -4,11 +4,24 @@ import Image from 'next/image'
 import Link from 'next/link';
 import { CardProps } from "@/common.types";
 import { createCookie } from '@/app/actions'
+import { useShoppingCart } from "@/context/ShoppingCartContext"
 
 
 
 export const Card = ({ id, name, brand, price, image }: CardProps) => {
+
+    const {
+        getItemQuantity,
+        increaseCartQuantity,
+        decreaseCartQuantity,
+        removeFromCart,
+    } = useShoppingCart()
+
+    const quantity = getItemQuantity(id)
+    // console.log(quantity)
+
     const handleAddToCart = () => {
+        increaseCartQuantity(id)
         console.log('add to cart')
         createCookie({ name: 'cart', value: '456872' })
     }

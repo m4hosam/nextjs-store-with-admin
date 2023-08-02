@@ -30,3 +30,18 @@ export function clearCart(res: any): void {
     });
     res.setHeader('Set-Cookie', cookieValue);
 }
+
+
+// Function to get cart items and their quantities from the API
+export const getCartItems = async (): Promise<{ [productId: string]: number }> => {
+    try {
+        const response = await fetch('/api/cart');
+        if (!response.ok) {
+            throw new Error('Failed to fetch cart items from the API.');
+        }
+        return response.json();
+    } catch (error) {
+        console.error('Error fetching cart items:', error);
+        return {};
+    }
+};
