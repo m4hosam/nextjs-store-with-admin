@@ -12,7 +12,7 @@ export type CardProps = {
 export type CartItemProps = {
     name: string,
     brand: string;
-    price: string;
+    price: number;
     image: string;
     quantity: number;
 }
