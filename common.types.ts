@@ -9,6 +9,14 @@ export type CardProps = {
     image: string;
 };
 
+export type CartItemProps = {
+    name: string,
+    brand: string;
+    price: string;
+    image: string;
+    quantity: number;
+}
+
 export type FormState = {
     productName: string;
     brand: string;

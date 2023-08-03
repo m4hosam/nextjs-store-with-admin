@@ -22,8 +22,8 @@ export const Card = ({ id, name, brand, price, image }: CardProps) => {
 
     const handleAddToCart = () => {
         increaseCartQuantity(id)
-        console.log('add to cart')
-        createCookie({ name: 'cart', value: '456872' })
+        // console.log('add to cart')
+        // createCookie({ name: 'cart', value: '456872' })
     }
 
 
