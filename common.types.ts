@@ -9,12 +9,9 @@ export type CardProps = {
     image: string;
 };
 
-export type CartItemProps = {
-    name: string,
-    brand: string;
-    price: number;
-    image: string;
-    quantity: number;
+export type CartSchema = {
+    product_id: string,
+    quantity: string;
 }
 
 export type FormState = {

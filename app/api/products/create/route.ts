@@ -6,12 +6,6 @@ import { FormState } from '@/common.types';
 
 const prisma = new PrismaClient()
 
-// export const POST = async (req: any, res: any) => {
-//     const { image, productName, productDescription, price } = await req.body;
-//     console.log(productName);
-//     return new Response(JSON.stringify({ message: "Product added successfully" }), { status: 200 });
-
-// }
 
 
 

@@ -21,6 +21,19 @@ model Products {
   stock_price Decimal
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+  Cart        Cart[]
+}
+
+model Cart {
+  id         String   @id @default(uuid())
+  cookie_id  String
+  product    Products @relation(fields: [product_id], references: [id])
+  product_id String
+  quantity   Int
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([product_id], name: "productIdIndex")
 }
 
 // model Addresses {
