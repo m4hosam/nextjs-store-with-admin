@@ -127,7 +127,7 @@ export async function POST(request: Request) {
         else {
             console.log('cart does not exist');
             addNewCookie();
-            return new Response(JSON.stringify({ message: "WTF" }), { status: 500 });
+            return new Response(JSON.stringify({ message: "WTF" }), { status: 200 });
 
         }
 
