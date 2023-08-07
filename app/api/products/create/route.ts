@@ -1,10 +1,9 @@
 import fs from 'fs';
 import path from 'path';
 import dataUriToBuffer from 'data-uri-to-buffer';
-import { PrismaClient } from '@prisma/client'
+import prisma from '@/lib/prismadb';
 import { FormState } from '@/common.types';
 
-const prisma = new PrismaClient()
 
 
 

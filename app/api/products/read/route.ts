@@ -1,8 +1,7 @@
 import fs from 'fs';
 import path from 'path';
-import { PrismaClient } from '@prisma/client'
+import prisma from '@/lib/prismadb';
 
-const prisma = new PrismaClient()
 
 
 export async function GET(request: Request) {
