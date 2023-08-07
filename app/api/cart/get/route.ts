@@ -13,7 +13,7 @@ export async function GET() {
             });
 
             if (!cartItems) {
-                return new Response(JSON.stringify({ message: "cart Not Found in DB" }), { status: 404 });
+                return new Response(JSON.stringify({ message: "cart Not Found in DB", success: false }), { status: 404 });
             }
 
             // Return the cart items in the response
@@ -27,7 +27,7 @@ export async function GET() {
         }
     }
     else {
-        return new Response(JSON.stringify({ message: "Cart does not exist" }), { status: 404 });
+        return new Response(JSON.stringify({ message: "Cart does not exist", success: false }), { status: 404 });
     }
 
 

@@ -1,9 +1,12 @@
 import React from 'react'
 import { CartItem } from '@/components/cartItem'
+// import { useShoppingCart } from "@/context/ShoppingCartContext"
 
 
 
 export default async function Cart() {
+    // const { cartItems } = useShoppingCart()
+    // console.log(cartItems)
     return (
         <div className="h-screen bg-gray-100 pt-20">
             <h1 className="mb-10 text-center text-2xl font-bold">Cart Items</h1>

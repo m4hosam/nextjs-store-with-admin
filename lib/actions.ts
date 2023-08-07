@@ -3,11 +3,9 @@ import axios from 'axios';
 
 
 const URL = `${process.env.NEXT_PUBLIC_API_URL}products/read`;
+const cartAPI = `${process.env.NEXT_PUBLIC_API_URL}cart/get`;
 
 export async function getProducts() {
-    // const res = await fetch(URL);
-    // console.log(res.json());
-    // return res.json();
     try {
         const response = await axios.get(URL);
         return response.data;
@@ -24,6 +22,16 @@ export const getProduct = async (id: string) => {
     return res.json();
 }
 
+
+export async function getCartItems() {
+    try {
+        const response = await axios.get(cartAPI);
+        return response.data;
+    } catch (error) {
+        console.log(error);
+        throw error;
+    }
+}
 
 
 
