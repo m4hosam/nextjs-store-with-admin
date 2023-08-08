@@ -11,7 +11,7 @@ export type CardProps = {
 
 export type CartSchema = {
     product_id: string,
-    quantity: string;
+    quantity: number;
 }
 
 export type FormState = {

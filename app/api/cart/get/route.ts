@@ -10,11 +10,15 @@ export async function GET() {
             // Fetch all products in the cart using Prisma
             const cartItems = await prisma.cart.findMany({
                 where: { cookie_id: cartCookie.value },
+                select: {
+                    product_id: true,
+                    quantity: true,
+                },
             });
 
-            if (!cartItems) {
-                return new Response(JSON.stringify({ message: "cart Not Found in DB", success: false }), { status: 404 });
-            }
+            // if (!cartItems) {
+            //     return new Response(JSON.stringify({ message: "cart Not Found in DB", success: false }), { status: 404 });
+            // }
 
             // Return the cart items in the response
             return new Response(JSON.stringify(cartItems), { status: 200 });
@@ -27,7 +31,7 @@ export async function GET() {
         }
     }
     else {
-        return new Response(JSON.stringify({ message: "Cart does not exist", success: false }), { status: 404 });
+        return new Response(JSON.stringify([]), { status: 200 });
     }
 
 
