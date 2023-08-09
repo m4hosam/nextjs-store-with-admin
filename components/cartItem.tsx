@@ -1,10 +1,10 @@
 "use client"
 import { useShoppingCart } from "@/context/ShoppingCartContext"
-import { CardProps } from "@/common.types"
+import { CartProps } from "@/common.types"
 import Image from "next/image"
 
 
-export const CartItem = ({ id, name, brand, image, price }: CardProps) => {
+export const CartItem = ({ id, name, brand, price, image, quantity }: CartProps) => {
   const {
     getItemQuantity,
     increaseCartQuantity,
@@ -12,9 +12,6 @@ export const CartItem = ({ id, name, brand, image, price }: CardProps) => {
     removeFromCart,
   } = useShoppingCart()
 
-
-
-  const quantity = getItemQuantity(id)
 
 
   return (

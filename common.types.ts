@@ -8,6 +8,14 @@ export type CardProps = {
     price: string;
     image: string;
 };
+export type CartProps = {
+    id: string,
+    name: string,
+    brand: string;
+    price: string;
+    image: string;
+    quantity: number;
+};
 
 export type CartSchema = {
     product_id: string,
