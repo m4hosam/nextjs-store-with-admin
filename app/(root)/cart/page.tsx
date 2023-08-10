@@ -1,44 +1,25 @@
+"use client"
 import React from 'react'
 import { CartItem } from '@/components/cartItem'
-import { getProductsInCart } from '@/lib/actions'
-// import { useShoppingCart } from "@/context/ShoppingCartContext"
+import { useShoppingCart } from '@/context/ShoppingCartContext'
 
-interface Product {
-    id: string;
-    name: string;
-    brand: string;
-    price: string;
-    image: string;
-}
+export default function Cart() {
+    const { cartItems } = useShoppingCart()
+    console.log("cartItems: ", cartItems)
 
-interface CartItemData {
-    product: Product;
-    quantity: number;
-}
-
-
-export default async function Cart() {
-    const cartItems: CartItemData[] = await getProductsInCart()
-    console.log("Cart Items Cart Page\n", cartItems)
-    // const { cartItems } = useShoppingCart()
     return (
         <div className="h-screen bg-gray-100 pt-20">
             <h1 className="mb-10 text-center text-2xl font-bold">Cart Items</h1>
             <div className="mx-auto max-w-5xl justify-center px-6 md:flex md:space-x-6 xl:px-0">
                 <div className="rounded-lg md:w-2/3">
 
-
-                    {cartItems.map((cartItem) => (
-                        <CartItem
-                            key={cartItem.product.id}
-                            id={cartItem.product.id}
-                            name={cartItem.product.name}
-                            brand={cartItem.product.brand}
-                            price={`${cartItem.product.price} EGP`}
-                            image={cartItem.product.image}
-                            quantity={cartItem.quantity}
-                        />
-                    ))}
+                    <CartItem
+                        id="f342a929-2f93-4ff5-9f61-36535a4768e7"
+                        name="Rolex Watch leather strap"
+                        brand="Rolex"
+                        price='250 EGP'
+                        image='/assets/Metalhandwatchhighcopy-1690749112645.png'
+                    />
                 </div>
 
                 <div className="mt-6 h-full rounded-lg border bg-white p-6 shadow-md md:mt-0 md:w-1/3">

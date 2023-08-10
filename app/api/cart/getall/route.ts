@@ -30,7 +30,7 @@ export async function GET() {
             // if (!cartItems) {
             //     return new Response(JSON.stringify({ message: "cart Not Found in DB", success: false }), { status: 404 });
             // }
-            console.log("cartItemsWithProducts", cartItemsWithProducts)
+            // console.log("cartItemsWithProducts", cartItemsWithProducts)
             // Return the cart items in the response
             return new Response(JSON.stringify(cartItemsWithProducts), { status: 200 });
         } catch (error) {

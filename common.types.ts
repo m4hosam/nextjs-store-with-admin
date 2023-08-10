@@ -17,6 +17,19 @@ export type CartProps = {
     quantity: number;
 };
 
+export interface Product {
+    id: string;
+    name: string;
+    brand: string;
+    price: string;
+    image: string;
+}
+
+export interface CartItemData {
+    product: Product;
+    quantity: number;
+}
+
 export type CartSchema = {
     product_id: string,
     quantity: number;
