@@ -6,7 +6,7 @@ import { Navbar } from '@/components/navbarUser'
 import { Card } from '@/components/card'
 import { SearchBar } from '@/components/ui/searchBar'
 import { Button } from '@/components/ui/button'
-
+import { ShoppingCartProvider } from "@/context/ShoppingCartContext"
 
 
 export default function RootLayout({
@@ -16,11 +16,11 @@ export default function RootLayout({
 }) {
 
     return (
-        <div>
+        <ShoppingCartProvider>
 
             <Navbar />
             {children}
-        </div>
+        </ShoppingCartProvider>
 
 
     )

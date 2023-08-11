@@ -4,24 +4,19 @@ import { Transition } from "@headlessui/react";
 import Link from "next/link";
 import { getCartItems } from "@/lib/actions";
 import { CartSchema } from "@/common.types";
+import { useShoppingCart } from "@/context/ShoppingCartContext"
 
 
 export const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
 
+    const { cartQuantity } = useShoppingCart()
+    // const [cartItemsCount, setCartItemsCount] = useState(0);
 
-    const [cartItemsCount, setCartItemsCount] = useState(0);
-
-    useEffect(() => {
-        // Fetch cart items from the API
-        getCartItems().then((cartItems) => {
-            const totalCount = cartItems.reduce((total: number, item: CartSchema) => {
-                return total + item.quantity;
-            }, 0);
-            console.log("Total count in cart: ", totalCount);
-            setCartItemsCount(totalCount);
-        });
-    }, []);
+    // useEffect(() => {
+    //     // Fetch initial cart items count
+    //     handleCartUpdate((count) => setCartItemsCount(count));
+    // }, []);
 
     return (
 
@@ -76,9 +71,9 @@ export const Navbar = () => {
 
                         <Link href="/cart" className="h-16 flex justify-center items-center">
                             <div className="relative py-2">
-                                {cartItemsCount > 0 && (
+                                {cartQuantity > 0 && (
                                     <div className="absolute left-3" style={{ top: "0.8rem" }}>
-                                        <p className="flex h-2 w-2 items-center justify-center rounded-full bg-red-500 p-2 text-xs text-white">{cartItemsCount}</p>
+                                        <p className="flex h-2 w-2 items-center justify-center rounded-full bg-red-500 p-2 text-xs text-white">{cartQuantity}</p>
                                     </div>
                                 )}
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="file: mt-4 h-6 w-6 text-cyan-100">
