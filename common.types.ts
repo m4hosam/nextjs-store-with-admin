@@ -9,26 +9,16 @@ export type CardProps = {
     image: string;
 };
 export type CartProps = {
-    id: string,
+    product_id: string,
     name: string,
     brand: string;
     price: string;
     image: string;
+    category: string;
     quantity: number;
 };
 
-export interface Product {
-    id: string;
-    name: string;
-    brand: string;
-    price: string;
-    image: string;
-}
 
-export interface CartItemData {
-    product: Product;
-    quantity: number;
-}
 
 export type CartSchema = {
     product_id: string,

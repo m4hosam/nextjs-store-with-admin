@@ -1,41 +1,37 @@
 import { NextResponse, NextRequest } from 'next/server'
 
-export function middleware(request: NextRequest) {
-    const response = NextResponse.next()
+export async function middleware(request: NextRequest) {
     // Get a cookie
-    const cookie = request.cookies.get('myCookieName')?.valueOf()
+    let cookie = await request.cookies.get('cart')?.value
+    // console.log("Cookie in Middleware1", cookie)
 
-    // console.log("cookie", cookie)
+    // To change a cookie, first create a response
+    const response = NextResponse.next()
 
-    response.cookies?.set('auth2', 'true')
-
-
-
-    // Get all cookies
-    const all_cookies = request.cookies.getAll()
-    // console.log("all Cookies", all_cookies)
-
-    // // To change a cookie, first create a response
-    // const response = NextResponse.next()
-
-    // // Set a cookie
-    // response.cookies.set('myCookieName', 'some-value')
+    if (cookie) {
+        // Set a cookie
+        response.cookies.set('cart', cookie)
+    }
 
     // // Setting a cookie with additional options
     // response.cookies.set({
-    //     name: 'myCookieName',
+    //     name: 'cart',
     //     value: 'some-value',
     //     httpOnly: true,
     // })
 
+
     // Delete a cookie
-    request.cookies.delete('myCookieName')
-    // console.log("does exists", request.cookies.has('myCookieName'))
+    // response.cookies.delete('myCookieName')
 
-    return NextResponse.next()
+    return response
 }
-
 // See "Matching Paths" below to learn more
 export const config = {
-    matcher: '/',
+    matcher: [
+        '/:path*',
+        // '/cart',
+        // '/api/cart/get',
+        // '/api/cart/getall'
+    ],
 }

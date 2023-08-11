@@ -1,20 +1,21 @@
-"use client"
-import { useShoppingCart } from "@/context/ShoppingCartContext"
-import { CardProps } from "@/common.types"
+
+import { addToCart } from '@/lib/actions'
+import { CartProps } from "@/common.types"
 import Image from "next/image"
 
 
-export const CartItem = ({ id, name, brand, image, price }: CardProps) => {
-  const {
-    getItemQuantity,
-    increaseCartQuantity,
-    decreaseCartQuantity,
-    removeFromCart,
-  } = useShoppingCart()
+export const CartItem = ({ product_id, name, brand, image, price, category, quantity }: CartProps) => {
+  function decreaseCartQuantity(id: string) {
+    console.log("decreaseCartQuantity: ", id)
+  }
+  function increaseCartQuantity(id: string) {
+    addToCart(id, quantity + 1)
+    console.log("increaseCartQuantity: ", id)
+  }
+  function removeFromCart(id: string) {
+    console.log("removeFromCart: ", id)
+  }
 
-
-
-  const quantity = getItemQuantity(id)
 
 
   return (
@@ -35,19 +36,19 @@ export const CartItem = ({ id, name, brand, image, price }: CardProps) => {
         </div>
         <div className="mt-4 flex justify-between im sm:space-y-6 sm:mt-0 sm:block sm:space-x-6">
           <div className="flex items-center border-gray-100 ">
-            <button onClick={() => decreaseCartQuantity(id)}
+            <button onClick={() => decreaseCartQuantity(product_id)}
               className="cursor-pointer rounded-l bg-gray-100 py-1 px-3.5 duration-100 hover:bg-blue-500 hover:text-blue-50">
               -
             </button>
             <p className="h-8 w-8 border bg-white text-center pt-2 text-xs outline-none">{quantity}</p>
-            <button onClick={() => increaseCartQuantity(id)}
+            <button onClick={() => increaseCartQuantity(product_id)}
               className="cursor-pointer rounded-r bg-gray-100 py-1 px-3 duration-100 hover:bg-blue-500 hover:text-blue-50">
               +
             </button>
           </div>
           <div className="flex items-center space-x-4">
             <p className="text-sm">{price}</p>
-            <button onClick={() => removeFromCart(id)}>
+            <button onClick={() => removeFromCart(product_id)}>
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="h-5 w-5 cursor-pointer duration-150 hover:text-red-500">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
               </svg>

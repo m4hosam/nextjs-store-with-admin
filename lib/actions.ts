@@ -37,9 +37,13 @@ export async function getCartItems() {
 
 export async function getProductsInCart() {
     try {
+
         const response = await axios.get(cartItemsURL);
-        // console.log(response.data)
+        console.log("getProductsInCart Fuction")
+
+
         return response.data;
+
     } catch (error) {
         console.log(error);
         throw error;

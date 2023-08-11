@@ -1,31 +1,36 @@
 import prisma from '@/lib/prismadb';
 import { cookies } from 'next/headers'
+import { NextResponse, NextRequest } from 'next/server'
 
 
+// export async function GET(request: NextRequest, response: NextResponse) {
 export async function GET() {
     // Why i can't read the cookies here?
     const cookieList = cookies();
-    const cartCookie = cookieList?.get('cart');
-    console.log("cartCookie", cartCookie)
+    console.log("cookieList", cookieList)
+
+    // const cartCookie = response.cookies.get('cart');
+    const cartCookie = cookieList.get('cart');
+    console.log("cartCookie getAll sup /", cartCookie)
     if (cartCookie) {
         try {
+
             // Fetch cart items with associated product and quantity
-            const cartItemsWithProducts = await prisma.cart.findMany({
-                where: { cookie_id: cartCookie.value },
-                select: {
-                    product: {
-                        select: {
-                            id: true,
-                            name: true,
-                            brand: true,
-                            category: true,
-                            price: true,
-                            image: true,
-                        },
-                    },
-                    quantity: true,
-                },
-            });
+            const cartItemsWithProducts = await prisma.$queryRaw`SELECT
+                c.product_id,
+                p.name,
+                p.brand,
+                p.category,
+                p.price,
+                p.image,
+                c.quantity
+            FROM
+                Cart c
+            JOIN
+                Products p ON c.product_id = p.id
+            WHERE
+                c.cookie_id = ${cartCookie.value};`
+
 
             // if (!cartItems) {
             //     return new Response(JSON.stringify({ message: "cart Not Found in DB", success: false }), { status: 404 });

@@ -3,26 +3,19 @@ import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link';
 import { CardProps } from "@/common.types";
-import { createCookie } from '@/app/actions'
-import { useShoppingCart } from "@/context/ShoppingCartContext"
+import { addToCart } from '@/lib/actions'
 
 
 
 export const Card = ({ id, name, brand, price, image }: CardProps) => {
 
-    const {
-        getItemQuantity,
-        increaseCartQuantity,
-        decreaseCartQuantity,
-        removeFromCart,
-    } = useShoppingCart()
 
-    const quantity = getItemQuantity(id)
+
     // console.log(quantity)
 
-    const handleAddToCart = () => {
-        increaseCartQuantity(id)
-        // console.log('add to cart')
+    async function handleAddToCart() {
+        await addToCart(id, 1)
+        console.log('add to cart')
         // createCookie({ name: 'cart', value: '456872' })
     }
 

@@ -2,21 +2,26 @@
 import React, { useState, useEffect } from "react";
 import { Transition } from "@headlessui/react";
 import Link from "next/link";
-import { useShoppingCart } from "@/context/ShoppingCartContext"
+import { getCartItems } from "@/lib/actions";
+import { CartSchema } from "@/common.types";
+
 
 export const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
-    const { openCart, cartQuantity } = useShoppingCart()
 
-    // const [cartItemCount, setCartItemCount] = useState(0);
 
-    // useEffect(() => {
-    //     // Fetch cart items from the API
-    //     getCartItems().then((cartItems) => {
-    //         const totalCount = Object.values(cartItems).reduce((acc, curr) => acc + curr, 0);
-    //         setCartItemCount(totalCount);
-    //     });
-    // }, []);
+    const [cartItemsCount, setCartItemsCount] = useState(0);
+
+    useEffect(() => {
+        // Fetch cart items from the API
+        getCartItems().then((cartItems) => {
+            const totalCount = cartItems.reduce((total: number, item: CartSchema) => {
+                return total + item.quantity;
+            }, 0);
+            console.log("Total count in cart: ", totalCount);
+            setCartItemsCount(totalCount);
+        });
+    }, []);
 
     return (
 
@@ -71,9 +76,9 @@ export const Navbar = () => {
 
                         <Link href="/cart" className="h-16 flex justify-center items-center">
                             <div className="relative py-2">
-                                {cartQuantity > 0 && (
+                                {cartItemsCount > 0 && (
                                     <div className="absolute left-3" style={{ top: "0.8rem" }}>
-                                        <p className="flex h-2 w-2 items-center justify-center rounded-full bg-red-500 p-2 text-xs text-white">{cartQuantity}</p>
+                                        <p className="flex h-2 w-2 items-center justify-center rounded-full bg-red-500 p-2 text-xs text-white">{cartItemsCount}</p>
                                     </div>
                                 )}
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="file: mt-4 h-6 w-6 text-cyan-100">
