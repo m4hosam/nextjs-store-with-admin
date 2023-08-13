@@ -1,17 +1,30 @@
 "use client"
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, use } from "react";
 import { Transition } from "@headlessui/react";
 import Link from "next/link";
 import { getCartItems } from "@/lib/actions";
 import { CartSchema } from "@/common.types";
 import { useShoppingCart } from "@/context/ShoppingCartContext"
 import AuthProviders from '@/components/AuthProviders'
-import { signIn, signOut, useSession } from 'next-auth/react'
+// import { signIn, signOut, useSession } from 'next-auth/react'
+import { SessionInterface } from "@/common.types";
+import { getCurrentUser } from "@/lib/session";
 
 
 export const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
-    const { data: session } = useSession()
+    // const { data: session } = useSession()
+    const [currentUser, setcurrentUser] = useState<SessionInterface>()
+    useEffect(() => {
+        const fetchCurrentUser = async () => {
+            const res = await getCurrentUser();
+
+            setcurrentUser(res);
+        }
+
+        fetchCurrentUser();
+    }, []);
+
 
     const { cartQuantity } = useShoppingCart()
     // const [cartItemsCount, setCartItemsCount] = useState(0);
@@ -63,10 +76,15 @@ export const Navbar = () => {
                                 >
                                     Category
                                 </Link>
-                                <div>
-
+                                {currentUser?.user ? (
+                                    <>
+                                        <Link href="/admin">
+                                            <button className="text-gray-300"> Admin</button>
+                                        </Link>
+                                    </>
+                                ) : (
                                     <AuthProviders />
-                                </div>
+                                )}
                             </div>
                         </div>
                         <button type="button" className="flex mr-3 text-sm bg-gray-800 rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
