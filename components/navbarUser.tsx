@@ -5,10 +5,13 @@ import Link from "next/link";
 import { getCartItems } from "@/lib/actions";
 import { CartSchema } from "@/common.types";
 import { useShoppingCart } from "@/context/ShoppingCartContext"
+import AuthProviders from '@/components/AuthProviders'
+import { signIn, signOut, useSession } from 'next-auth/react'
 
 
 export const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
+    const { data: session } = useSession()
 
     const { cartQuantity } = useShoppingCart()
     // const [cartItemsCount, setCartItemsCount] = useState(0);
@@ -60,6 +63,10 @@ export const Navbar = () => {
                                 >
                                     Category
                                 </Link>
+                                <div>
+
+                                    <AuthProviders />
+                                </div>
                             </div>
                         </div>
                         <button type="button" className="flex mr-3 text-sm bg-gray-800 rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">

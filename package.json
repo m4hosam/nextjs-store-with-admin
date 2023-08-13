@@ -31,9 +31,11 @@
     "flowbite": "^1.7.0",
     "fs": "^0.0.1-security",
     "js-cookie": "^3.0.5",
+    "jsonwebtoken": "^9.0.1",
     "lucide-react": "^0.258.0",
     "nanoid": "^4.0.2",
     "next": "^13.4.13",
+    "next-auth": "^4.23.0",
     "postcss": "8.4.25",
     "react": "18.2.0",
     "react-bootstrap": "^2.8.0",
@@ -51,6 +53,7 @@
     "@types/cookies": "^0.7.7",
     "@types/formidable": "^3.4.0",
     "@types/js-cookie": "^3.0.3",
+    "@types/jsonwebtoken": "^9.0.2",
     "@types/uuid": "^9.0.2",
     "prisma": "^4.16.2"
   }
