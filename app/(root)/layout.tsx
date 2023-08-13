@@ -7,6 +7,7 @@ import { Card } from '@/components/card'
 import { SearchBar } from '@/components/ui/searchBar'
 import { Button } from '@/components/ui/button'
 import { ShoppingCartProvider } from "@/context/ShoppingCartContext"
+import AuthProvider from "@/context/AuthProvider";
 
 
 export default function RootLayout({
@@ -16,11 +17,14 @@ export default function RootLayout({
 }) {
 
     return (
-        <ShoppingCartProvider>
 
-            <Navbar />
-            {children}
-        </ShoppingCartProvider>
+        <AuthProvider>
+            <ShoppingCartProvider>
+
+                <Navbar />
+                {children}
+            </ShoppingCartProvider>
+        </AuthProvider>
 
 
     )

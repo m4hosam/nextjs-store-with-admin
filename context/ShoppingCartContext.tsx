@@ -3,6 +3,7 @@ import { createContext, ReactNode, useContext, useEffect, useState } from "react
 import { useLocalStorage } from "@/hooks/useLocalStorage"
 import { getCartItems, addToCart } from '@/lib/actions'
 
+
 type ShoppingCartProviderProps = {
     children: ReactNode
 }
@@ -100,6 +101,7 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
                 closeCart,
                 cartItems,
                 cartQuantity,
+
             }}
         >
             {children}

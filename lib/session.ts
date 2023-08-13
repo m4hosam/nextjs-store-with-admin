@@ -4,6 +4,8 @@ import { AdapterUser } from "next-auth/adapters";
 import GoogleProvider from "next-auth/providers/google";
 import jsonwebtoken from 'jsonwebtoken'
 import { JWT } from "next-auth/jwt";
+import CredentialsProvider from 'next-auth/providers/credentials'
+
 
 // import { createUser, getUser } from "./actions";
 import { SessionInterface } from "@/common.types";
@@ -14,6 +16,33 @@ export const authOptions: NextAuthOptions = {
             clientId: process.env.GOOGLE_CLIENT_ID!,
             clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
         }),
+        CredentialsProvider({
+            name: "Credentials",
+            credentials: {
+                email: {
+                    label: "Email:",
+                    type: "email",
+                    placeholder: "Enter Your Email"
+                },
+                password: {
+                    label: "Password:",
+                    type: "password",
+                    placeholder: "Enter Your Password"
+                }
+            },
+            async authorize(credentials) {
+                // This is where you need to retrieve user data 
+                // to verify with credentials
+                // Docs: https://next-auth.js.org/configuration/providers/credentials
+                const user = { id: "42", email: "mohamedhosaam154@gmail.com", password: "nextauth" }
+
+                if (credentials?.email === user.email && credentials?.password === user.password) {
+                    return user
+                } else {
+                    return null
+                }
+            }
+        })
     ],
     // jwt: {
     //     encode: ({ secret, token }) => {
@@ -24,7 +53,7 @@ export const authOptions: NextAuthOptions = {
     // },
     theme: {
         colorScheme: "light",
-        logo: "/logo.svg",
+        logo: "/next.svg",
     },
     callbacks: {
         async session({ session }) {
@@ -52,6 +81,7 @@ export const authOptions: NextAuthOptions = {
             user: AdapterUser | User
         }) {
             try {
+                console.log("User: ", user)
                 // const userExists = await getUser(user?.email as string) as { user?: UserProfile }
 
                 // if (!userExists.user) {
@@ -67,8 +97,8 @@ export const authOptions: NextAuthOptions = {
     },
 };
 
-export async function getCurrentUser() {
-    const session = await getServerSession(authOptions) as SessionInterface;
+// export async function getCurrentUser() {
+//     const session = await getServerSession(authOptions) as SessionInterface;
 
-    return session;
-}
+//     return session;
+// }
