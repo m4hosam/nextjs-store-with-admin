@@ -11,10 +11,10 @@ export default async function Checkout() {
 
     return (
         <section className="flex flex-col gap-6">
-
-            <p>{session?.user?.name}</p>
+            <p>Secret</p>
+            {/* <p>{session?.user?.name}</p>
             <p>{session?.user?.email}</p>
-            <p>{session?.user?.image}</p>
+            <p>{session?.user?.image}</p> */}
         </section>
     )
 

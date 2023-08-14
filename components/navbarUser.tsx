@@ -8,12 +8,15 @@ import { useShoppingCart } from "@/context/ShoppingCartContext"
 import AuthProviders from '@/components/AuthProviders'
 import { signIn, signOut, useSession } from 'next-auth/react'
 import { SessionInterface } from "@/common.types";
+import { ProfileAvatar } from '@/components/profileAvatar'
 // import { getCurrentUser } from "@/lib/session";
 
 
 export const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
-    const { data: session } = useSession()
+    const { data: session, status } = useSession()
+    // status === "loading" ? console.log("loading") :
+    // status === "authenticated" ? console.log("authenticated") :
     console.log("session:", session)
     // const [currentUser, setcurrentUser] = useState<SessionInterface>()
     // useEffect(() => {
@@ -84,23 +87,7 @@ export const Navbar = () => {
 
                             {session?.user ? (
                                 <>
-                                    <button type="button"
-                                        className="flex mx-5 text-sm bg-gray-800 rounded-full
-                                                    md:mr-0 focus:ring-4 focus:ring-gray-300
-                                                     dark:focus:ring-gray-600"
-                                        id="user-menu-button"
-                                        aria-expanded="false"
-                                        data-dropdown-toggle="user-dropdown"
-                                        data-dropdown-placement="bottom">
-                                        <span className="sr-only">Open user menu</span>
-                                        {session?.user?.image ? (
-                                            <img className="w-8 h-8 rounded-full" src={session.user.image} alt="user photo" />
-                                        ) : (
-                                            // Provide a default image or placeholder
-                                            <img className="w-8 h-8 rounded-full" src="https://cdn-icons-png.flaticon.com/512/1077/1077114.png" alt="default user" />
-                                        )}
-
-                                    </button>
+                                    <ProfileAvatar />
                                 </>
                             ) : (
                                 <button type="button"
@@ -118,7 +105,7 @@ export const Navbar = () => {
 
 
                             )}
-                            <Link href="/cart" className=" flex justify-center items-center">
+                            <Link href="/cart" className="flex justify-center items-center mr-7">
                                 <div className="relative py-2">
                                     {cartQuantity > 0 && (
                                         <div className="absolute left-3" style={{ top: "0.8rem" }}>
