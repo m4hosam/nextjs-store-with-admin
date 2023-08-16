@@ -22,7 +22,11 @@ async function readUser(email: string) {
 export async function POST(request: Request) {
     const { name, email, password, cookie_id }: User = await request.json();
 
-
+    console.log("-----------create user-----------")
+    console.log("name: ", name)
+    console.log("email: ", email)
+    console.log("password: ", password)
+    console.log("cookie_id: ", cookie_id)
 
 
     try {
@@ -46,9 +50,6 @@ export async function POST(request: Request) {
     } catch (error) {
         console.error('Error fetching user:', error);
         return new Response(JSON.stringify({ success: false, error: error }), { status: 500 });
-    } finally {
-        // Don't forget to close the Prisma Client connection when you're done
-        await prisma.$disconnect();
     }
 
 }

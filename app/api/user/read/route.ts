@@ -9,10 +9,16 @@ import { loginSchema } from '@/common.types';
 //     "password": "notsecure",
 //     "cookie_id": ""
 // }
+type Email = {
+    email: string;
+}
 
 
 export async function POST(request: Request) {
-    const { email }: { email: string } = await request.json();
+    const { email }: Email = await request.json();
+    if (!email) {
+        return new Response(JSON.stringify(false), { status: 200 });
+    }
 
     try {
         // Create a new row in the Products table using Prisma
@@ -20,10 +26,6 @@ export async function POST(request: Request) {
             where: {
                 email: email,
             },
-            select: {
-                email: true,
-                name: true,
-            }
         });
         // console.log("user: ", user)
         if (!user) {
@@ -36,7 +38,7 @@ export async function POST(request: Request) {
 
         // Return the user in the response
     } catch (error) {
-        console.error('Error fetching user:', error);
+        console.error('Error fetching?????????/ user:', error);
         return new Response(JSON.stringify(false), { status: 500 });
     }
 

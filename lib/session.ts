@@ -36,7 +36,8 @@ export const authOptions: NextAuthOptions = {
                 // This is where you need to retrieve user data 
                 // to verify with credentials
                 // Docs: https://next-auth.js.org/configuration/providers/credentials
-                const user = autherize(credentials?.email as string, credentials?.password as string)
+                const user = await autherize(credentials?.email as string, credentials?.password as string)
+                console.log("user in autherize session: ", user)
                 if (!user) {
                     return null
                 } else {
@@ -87,23 +88,17 @@ export const authOptions: NextAuthOptions = {
             // }
             return session;
         },
-        async signIn({ user, account, profile, email, credentials }) {
-            // const isAllowedToSignIn = true
-            // if (isAllowedToSignIn) {
-            //     return true
-            // } else {
-            //     // Return false to display a default error message
-            //     return false
-            //     // Or you can return a URL to redirect to:
-            //     // return '/unauthorized'
-            // }
+        async signIn({ user }: {
+            user: AdapterUser | User
+        }) {
             try {
-                console.log("User signin: ", user)
-                const userExists = await getUser(user?.email as string)
+                // console.log("User signin: ", user)
+                // const userExists = await getUser(user?.email as string)
+                // console.log("userExists session: ", userExists)
 
-                if (!userExists) {
-                    return false
-                }
+                // if (!userExists) {
+                //     return false
+                // }
 
                 return true;
             } catch (error: any) {
