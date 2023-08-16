@@ -1,14 +1,25 @@
-import { User, Session } from 'next-auth'
+// import { User, Session } from 'next-auth'
 
-export interface SessionInterface extends Session {
-    user: User & {
-        id: string;
-        name: string;
-        email: string;
-        avatarUrl: string;
-    };
+// export interface SessionInterface extends Session {
+//     user: User & {
+//         id: string;
+//         name: string;
+//         email: string;
+//         avatarUrl: string;
+//     };
+// }
+
+export type loginSchema = {
+    email: string;
+    password: string;
 }
 
+export type User = {
+    name: string;
+    email: string;
+    password: string;
+    cookie_id: string;
+}
 
 
 export type CardProps = {

@@ -2,16 +2,16 @@
 import React, { useState, useEffect, use } from "react";
 import { Transition } from "@headlessui/react";
 import Link from "next/link";
-import { getCartItems } from "@/lib/actions";
+import { login } from "@/lib/actions";
 import { CartSchema } from "@/common.types";
 import { useShoppingCart } from "@/context/ShoppingCartContext"
 import AuthProviders from '@/components/AuthProviders'
 import { signIn, signOut, useSession } from 'next-auth/react'
-import { SessionInterface } from "@/common.types";
 import { ProfileAvatar } from '@/components/profileAvatar'
 // import { getCurrentUser } from "@/lib/session";
 import { getCsrfToken } from "next-auth/react"
 import { useRouter } from "next/navigation";
+
 
 
 interface CredentialsFormProps {
@@ -19,24 +19,24 @@ interface CredentialsFormProps {
 }
 
 
-export function CredentialsForm(props: CredentialsFormProps) {
+export function LoginForm(props: CredentialsFormProps) {
     const router = useRouter()
     const [error, setError] = useState<string | null>(null)
     const handleSubmit = async (e: any) => {
         e.preventDefault();
         const data = new FormData(e.currentTarget);
-        const signInResponse = await signIn("credentials", {
-            email: data.get("email"),
-            password: data.get("password"),
-            redirect: false,
-        });
+        const loginStatus = await login(data.get("email") as string, data.get("password") as string);
+        console.log("loginStatus", loginStatus)
 
-        if (signInResponse && !signInResponse.error) {
+        if (loginStatus === 200) {
             // Authentication success
             router.push("/")
         }
+        else if (loginStatus === 404) {
+            setError("User Not Found")
+        }
         else {
-            console.log("Error", signInResponse)
+            // 401 not autherized
             setError("Your Email or Password is wrong!")
         }
     }
@@ -47,7 +47,7 @@ export function CredentialsForm(props: CredentialsFormProps) {
             {error && (
                 <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
 
-                    <span className="block sm:inline">Email or Passward is wrong</span>
+                    <span className="block sm:inline">{error}</span>
                     {/* <span className="absolute top-0 bottom-0 right-0 px-4 py-3">
                         <svg className="fill-current h-6 w-6 text-red-500" role="button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><title>Close</title><path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z" /></svg>
                     </span> */}

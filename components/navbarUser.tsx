@@ -17,7 +17,7 @@ export const Navbar = () => {
     const { data: session, status } = useSession()
     // status === "loading" ? console.log("loading") :
     // status === "authenticated" ? console.log("authenticated") :
-    console.log("session:", session)
+    console.log("session in navbar:", session)
     // const [currentUser, setcurrentUser] = useState<SessionInterface>()
     // useEffect(() => {
     //     const fetchCurrentUser = async () => {

@@ -12,7 +12,7 @@ import { ProfileAvatar } from '@/components/profileAvatar'
 // import { getCurrentUser } from "@/lib/session";
 import { getCsrfToken } from "next-auth/react"
 import { useRouter } from "next/navigation";
-import { CredentialsForm } from '@/components/credentialsForm'
+import { CredentialsForm } from '@/components/loginForm'
 import { authOptions } from "@/lib/session";
 import { getServerSession } from "next-auth/next"
 import { redirect } from "next/navigation"

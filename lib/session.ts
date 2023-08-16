@@ -5,10 +5,11 @@ import GoogleProvider from "next-auth/providers/google";
 import jsonwebtoken from 'jsonwebtoken'
 import { JWT } from "next-auth/jwt";
 import CredentialsProvider from 'next-auth/providers/credentials'
+import { autherize, getUser } from '@/lib/actions'
+import { loginSchema } from '@/common.types'
 
 
 // import { createUser, getUser } from "./actions";
-import { SessionInterface } from "@/common.types";
 
 export const authOptions: NextAuthOptions = {
     providers: [
@@ -29,18 +30,19 @@ export const authOptions: NextAuthOptions = {
                     type: "password",
                     placeholder: "Enter Your Password"
                 }
+
             },
             async authorize(credentials) {
                 // This is where you need to retrieve user data 
                 // to verify with credentials
                 // Docs: https://next-auth.js.org/configuration/providers/credentials
-                const user = { id: "42", email: "mohamedhosaam154@gmail.com", password: "nextauth" }
-
-                if (credentials?.email === user.email && credentials?.password === user.password) {
-                    return user
-                } else {
+                const user = autherize(credentials?.email as string, credentials?.password as string)
+                if (!user) {
                     return null
+                } else {
+                    return user
                 }
+
             }
         })
     ],
@@ -51,6 +53,14 @@ export const authOptions: NextAuthOptions = {
     //     decode: async ({ secret, token }) => {
     //     },
     // },
+    secret: process.env.NEXTAUTH_SECRET!,
+    pages: {
+        signIn: '/account/login',
+        signOut: '/auth/signout',
+        // error: '/auth/error', // Error code passed in query string as ?error=
+        // verifyRequest: '/auth/verify-request', // (used for check email message)
+        // newUser: '/account/register' // New users will be directed here on first sign in (leave the property out if not of interest)
+    },
     theme: {
         colorScheme: "light",
         logo: "/next.svg",
@@ -77,16 +87,23 @@ export const authOptions: NextAuthOptions = {
             // }
             return session;
         },
-        async signIn({ user }: {
-            user: AdapterUser | User
-        }) {
+        async signIn({ user, account, profile, email, credentials }) {
+            // const isAllowedToSignIn = true
+            // if (isAllowedToSignIn) {
+            //     return true
+            // } else {
+            //     // Return false to display a default error message
+            //     return false
+            //     // Or you can return a URL to redirect to:
+            //     // return '/unauthorized'
+            // }
             try {
-                console.log("User: ", user)
-                // const userExists = await getUser(user?.email as string) as { user?: UserProfile }
+                console.log("User signin: ", user)
+                const userExists = await getUser(user?.email as string)
 
-                // if (!userExists.user) {
-                //     await createUser(user.name as string, user.email as string, user.image as string)
-                // }
+                if (!userExists) {
+                    return false
+                }
 
                 return true;
             } catch (error: any) {

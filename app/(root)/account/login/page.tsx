@@ -7,12 +7,12 @@ import { CartSchema } from "@/common.types";
 import { useShoppingCart } from "@/context/ShoppingCartContext"
 import AuthProviders from '@/components/AuthProviders'
 import { signIn, signOut, useSession } from 'next-auth/react'
-import { SessionInterface } from "@/common.types";
+
 import { ProfileAvatar } from '@/components/profileAvatar'
 // import { getCurrentUser } from "@/lib/session";
 import { getCsrfToken } from "next-auth/react"
 import { useRouter } from "next/navigation";
-import { CredentialsForm } from '@/components/credentialsForm'
+import { LoginForm } from '@/components/loginForm'
 import { authOptions } from "@/lib/session";
 import { getServerSession } from "next-auth/next"
 import { redirect } from "next/navigation"
@@ -44,7 +44,7 @@ export default async function Login() {
             </div>
             <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
 
-                <CredentialsForm />
+                <LoginForm />
             </div>
 
             <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
