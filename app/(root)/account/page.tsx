@@ -27,7 +27,7 @@ export default async function Account() {
         <div className="flex flex-col justify-between w-full sm:flex-row  sm:m-20">
             <div className="flex flex-row items-center  justify-between sm:justify-start border-solid border-2 border-slate-300 sm:flex-col">
                 <Link href="/account"
-                    className="px-4 sm:px-16 py-4 text-sm font-medium text-gray-500 transition duration-150 ease-in-out hover:text-gray-900 hover:bg-slate-200 w-full text-center"
+                    className="px-4 sm:px-16 py-4 text-sm font-medium text-gray-500 transition duration-150 ease-in-out hover:text-gray-900 hover:bg-slate-200 w-full text-center bg-slate-200"
                 >
                     Account
                 </Link>
