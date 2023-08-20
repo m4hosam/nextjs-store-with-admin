@@ -1,8 +1,8 @@
 
 
 import React from "react";
-
-
+import { ProfileLinks } from "@/components/ui/profileLinks";
+import { ProfileForm } from "@/components/forms/profileForm";
 
 export default async function Account() {
 
