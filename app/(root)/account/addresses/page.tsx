@@ -16,6 +16,7 @@ import { authOptions } from "@/lib/session";
 import { getServerSession } from "next-auth/next"
 import { redirect } from "next/navigation"
 import { Input } from "@/components/ui/input";
+import { AddressForm } from "@/components/forms/addressForm";
 import { ProfileLinks } from "@/components/ui/profileLinks";
 
 
@@ -24,10 +25,10 @@ export default async function Account() {
 
 
     return (
-        <div className="flex flex-col justify-between w-full h-72 sm:flex-row  sm:m-20">
-            <ProfileLinks active="order" />
+        <div className="flex flex-col justify-between w-full sm:flex-row  sm:m-20">
+            <ProfileLinks active="address" />
             <div className="flex flex-col items-start justify-start w-4/6 py-7 sm:mx-1 mx-16">
-                <h2>No orders</h2>
+                <AddressForm />
             </div>
         </div>
     )

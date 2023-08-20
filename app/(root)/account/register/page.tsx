@@ -12,7 +12,7 @@ import { ProfileAvatar } from '@/components/profileAvatar'
 import { authOptions } from "@/lib/session";
 import { getServerSession } from "next-auth/next"
 import { redirect } from "next/navigation"
-import { RegisterForm } from '@/components/registerForm'
+import { RegisterForm } from '@/components/forms/registerForm'
 
 export default async function Register() {
     const session = await getServerSession(authOptions)
