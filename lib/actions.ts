@@ -129,10 +129,9 @@ export async function createUser(email: string, password: string, name: string) 
 
 export async function login(email: string, password: string) {
     const hashedPassword = bcrypt.hashSync(password, "$2a$10$QwS47P5iOzOxQclE1Fj7x.")
-    // $2a$10$mMTXk7oLSz5YnFwj1SrmDuEfLB7U04JT6etUSULVOjoKJx.M/YiJa
-    // $2a$10$eOsuM.ZiQjsy9RCV28ZmJOpoREerT4SbPpjy6gVVjJ.hUd.63VN4G
 
-    console.log("hashedPassword: ", hashedPassword)
+
+    // console.log("hashedPassword: ", hashedPassword)
     try {
         const user = await getUser(email)
         // console.log("login user: ", user)
