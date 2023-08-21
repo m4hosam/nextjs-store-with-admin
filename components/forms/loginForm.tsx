@@ -11,7 +11,7 @@ import { ProfileAvatar } from '@/components/profileAvatar'
 // import { getCurrentUser } from "@/lib/session";
 import { getCsrfToken } from "next-auth/react"
 import { useRouter } from "next/navigation";
-
+import { linkCookieToUser } from "@/lib/actions";
 
 
 interface CredentialsFormProps {
@@ -30,6 +30,7 @@ export function LoginForm(props: CredentialsFormProps) {
 
         if (loginStatus === 200) {
             // Authentication success
+            await linkCookieToUser(data.get("email") as string)
             router.push("/")
         }
         else if (loginStatus === 404) {

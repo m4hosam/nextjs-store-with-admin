@@ -7,7 +7,6 @@ import { CartSchema } from "@/common.types";
 import { useShoppingCart } from "@/context/ShoppingCartContext"
 import AuthProviders from '@/components/AuthProviders'
 import { signIn, signOut, useSession } from 'next-auth/react'
-import { SessionInterface } from "@/common.types";
 import { ProfileAvatar } from '@/components/profileAvatar'
 // import { getCurrentUser } from "@/lib/session";
 

@@ -207,4 +207,13 @@ export async function register(email: string, password: string, name: string) {
 
 
 
-
+export async function linkCookieToUser(email: string) {
+    try {
+        const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}cart/linktouser`, { email: email });
+        console.log("linkCookieToUser---->", response.data)
+        return;
+    } catch (error) {
+        console.log(error);
+        throw error;
+    }
+}

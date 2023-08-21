@@ -9,9 +9,20 @@
 //     };
 // }
 
+
+
 export type loginSchema = {
     email: string;
     password: string;
+}
+
+
+export type AddressSchema = {
+    address: string;
+    city: string;
+    state: string;
+    postal: string;
+    phone: string;
 }
 
 export type User = {

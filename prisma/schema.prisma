@@ -37,23 +37,27 @@ model Cart {
 }
 
 model User {
-  id        String   @id @default(uuid())
+  id        String      @id @default(uuid())
   name      String
-  email     String   @unique
+  email     String      @unique
   password  String
   cookie_id String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+  Addresses Addresses[]
 }
 
-// model Addresses {
-//   id        String   @id @default(uuid())
-//   name      String
-//   address   String
-//   city      String
-//   state     String
-//   zip       String
-//   phone     String
-//   createdAt DateTime @default(now())
-//   updatedAt DateTime @updatedAt
-// }
+model Addresses {
+  id        String   @id @default(uuid())
+  address   String
+  city      String
+  state     String
+  postal    String
+  phone     String
+  user_id   String
+  user      User     @relation(fields: [user_id], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([user_id], name: "userIdIndex")
+}

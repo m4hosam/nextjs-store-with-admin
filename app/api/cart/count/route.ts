@@ -1,6 +1,8 @@
 import prisma from '@/lib/prismadb';
 import { cookies } from 'next/headers';
 
+
+// This Route is out of service
 export async function GET() {
     const cookieList = cookies();
     const cartCookie = cookieList.get('cart');

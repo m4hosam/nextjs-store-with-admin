@@ -10,7 +10,7 @@ export const config = {
         "/cart/checkout",
         "/account",
         "/account/orders",
-        "/account/profile",
+        "/account/addresses",
         // "/api/auth/signin",
         // "/api/auth/signout",
         // "/api/auth/session",

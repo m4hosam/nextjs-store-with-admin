@@ -17,20 +17,28 @@ import {
 import { Input } from "@/components/ui/input"
 import toast, { Toaster } from 'react-hot-toast';
 
+
+
+type props = {
+    name: any,
+    email: any,
+    image: any,
+}
+
 const FormSchema = z.object({
     name: z.string().min(2, {
         message: "name must be at least 2 characters.",
     }),
-    phone: z.string().min(10, {
-        message: "phone must be at least 10 characters.",
-    }),
+    // phone: z.string().min(10, {
+    //     message: "phone must be at least 10 characters.",
+    // }),
 })
 
-export function ProfileForm() {
+export function ProfileForm(props: props) {
     const form = useForm<z.infer<typeof FormSchema>>({
         resolver: zodResolver(FormSchema),
         defaultValues: {
-            name: "Tom",
+            name: props.name,
             // Add default values for other fields if needed
         },
     })
@@ -64,11 +72,11 @@ export function ProfileForm() {
                 <FormItem>
                     <FormLabel>email</FormLabel>
 
-                    <Input placeholder="email" value="smisdf@fsd.sdf" disabled />
+                    <Input placeholder="email" value={props.email} disabled />
                     <FormMessage />
                 </FormItem>
 
-                <FormField
+                {/* <FormField
                     control={form.control}
                     name="phone"
                     render={({ field }) => (
@@ -80,7 +88,7 @@ export function ProfileForm() {
                             <FormMessage />
                         </FormItem>
                     )}
-                />
+                /> */}
                 <Button type="submit">Save</Button>
             </form>
         </Form>
