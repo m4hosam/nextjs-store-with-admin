@@ -1,18 +1,24 @@
-import fs from 'fs';
-import path from 'path';
-import dataUriToBuffer from 'data-uri-to-buffer';
+
 import prisma from '@/lib/prismadb';
-import { User } from '@/common.types';
+import { AddressSchema } from '@/common.types';
 
 
 
-async function readUser(email: string) {
-    const user = await prisma.user.findUnique({
-        where: {
-            email: email,
-        },
-    });
-    return user;
+
+async function readUserId(email: string) {
+    try {
+        const user = await prisma.user.findUnique({
+            where: {
+                email: email,
+            },
+            select: {
+                id: true,
+            },
+        });
+        return user?.id || '';;
+    } catch (error) {
+        return "";
+    }
 }
 
 
@@ -20,12 +26,81 @@ async function readUser(email: string) {
 
 
 export async function POST(request: Request) {
-    const { name, email, password, cookie_id }: User = await request.json();
-
-
-
+    const { address, city, state, postal, phone, email }: AddressSchema = await request.json();
+    console.log("-------- Post /address ---------")
+    console.log("address: ", address)
+    console.log("city: ", city)
+    console.log("state: ", state)
+    console.log("postal: ", postal)
+    console.log("email: ", email)
 
     try {
+        const user_id: string = await readUserId(email);
+        console.log("user.id: ", user_id)
+
+        if (!user_id) {
+            return new Response(JSON.stringify(false), { status: 404 });
+        }
+
+        const existingAddress = await prisma.addresses.findFirst({
+            where: {
+                user_id: user_id,
+            },
+        });
+        console.log("existingAddress: ", existingAddress)
+        if (existingAddress) {
+            // Address already exists, update it
+            const addressUpdated = await prisma.addresses.update({
+                where: {
+                    id: existingAddress.id,
+                },
+                data: {
+                    address: address,
+                    city: city,
+                    state: state,
+                    postal: postal,
+                    phone: phone,
+                },
+            });
+        } else {
+            // Address doesn't exist, create it
+            const addressCreated = await prisma.addresses.create({
+                data: {
+                    address: address,
+                    city: city,
+                    state: state,
+                    postal: postal,
+                    phone: phone,
+                    user: {
+                        connect: {
+                            id: user_id,
+                        },
+                    },
+                },
+            });
+        }
+
+        // const addressCreated = await prisma.addresses.upsert({
+        //     where: {
+        //         user: { id: user_id }, // Using the relation field
+        //     },
+        //     update: {
+        //         address: address,
+        //         city: city,
+        //         state: state,
+        //         postal: postal,
+        //         phone: phone,
+        //     },
+        //     create: {
+        //         address: address,
+        //         city: city,
+        //         state: state,
+        //         postal: postal,
+        //         phone: phone,
+        //         user: { connect: { id: user_id } },
+        //     },
+        // });
+
 
         // Return the user in the response
         return new Response(JSON.stringify({ success: "Post" }), { status: 200 });

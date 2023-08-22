@@ -23,6 +23,7 @@ export type AddressSchema = {
     state: string;
     postal: string;
     phone: string;
+    email: string;
 }
 
 export type User = {
@@ -31,6 +32,7 @@ export type User = {
     password: string;
     cookie_id: string;
 }
+
 
 
 export type CardProps = {

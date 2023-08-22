@@ -70,18 +70,19 @@ export const authOptions: NextAuthOptions = {
         async session({ session }) {
             // const email = session?.user?.email as string;
 
+
             // try {
             //     const data = await getUser(email) as { user?: UserProfile }
+            // Here i changed the name of the user to the id of the user
+            // const newSession = {
+            //     ...session,
+            //     user: {
+            //         ...session.user,
+            //         name: "525689",
+            //     },
+            // };
 
-            //     const newSession = {
-            //         ...session,
-            //         user: {
-            //             ...session.user,
-            //             ...data?.user,
-            //         },
-            //     };
-
-            //     return newSession;
+            // return newSession;
             // } catch (error: any) {
             //     console.error("Error retrieving user data: ", error.message);
             //     return session;
