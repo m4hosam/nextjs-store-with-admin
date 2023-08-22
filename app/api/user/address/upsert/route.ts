@@ -1,8 +1,15 @@
-
 import prisma from '@/lib/prismadb';
 import { AddressSchema } from '@/common.types';
 
 
+// {
+//     "address": "Subk elahad ashmoun",
+//     "city": "Menofia",
+//     "state": "ashmoun",
+//     "postal": "55555",
+//     "phone": "111111111",
+//     "email": "smilemohamed5@gmail.com"
+// }
 
 
 async function readUserId(email: string) {
@@ -23,8 +30,6 @@ async function readUserId(email: string) {
 
 
 
-
-
 export async function POST(request: Request) {
     const { address, city, state, postal, phone, email }: AddressSchema = await request.json();
     console.log("-------- Post /address ---------")
@@ -36,7 +41,7 @@ export async function POST(request: Request) {
 
     try {
         const user_id: string = await readUserId(email);
-        console.log("user.id: ", user_id)
+        console.log("user_id: ", user_id)
 
         if (!user_id) {
             return new Response(JSON.stringify(false), { status: 404 });
@@ -62,6 +67,7 @@ export async function POST(request: Request) {
                     phone: phone,
                 },
             });
+            console.log("addressUpdated: ", addressUpdated)
         } else {
             // Address doesn't exist, create it
             const addressCreated = await prisma.addresses.create({
@@ -78,43 +84,14 @@ export async function POST(request: Request) {
                     },
                 },
             });
+            console.log("addressCreated: ", addressCreated)
         }
 
-        // const addressCreated = await prisma.addresses.upsert({
-        //     where: {
-        //         user: { id: user_id }, // Using the relation field
-        //     },
-        //     update: {
-        //         address: address,
-        //         city: city,
-        //         state: state,
-        //         postal: postal,
-        //         phone: phone,
-        //     },
-        //     create: {
-        //         address: address,
-        //         city: city,
-        //         state: state,
-        //         postal: postal,
-        //         phone: phone,
-        //         user: { connect: { id: user_id } },
-        //     },
-        // });
-
-
         // Return the user in the response
-        return new Response(JSON.stringify({ success: "Post" }), { status: 200 });
+        return new Response(JSON.stringify(true), { status: 200 });
     } catch (error) {
         console.error('Error fetching user:', error);
-        return new Response(JSON.stringify({ success: false, error: error }), { status: 500 });
+        return new Response(JSON.stringify(false), { status: 500 });
     }
-
-}
-
-
-export async function GET(request: Request) {
-
-    return new Response(JSON.stringify({ success: "Get" }), { status: 200 });
-
 
 }
