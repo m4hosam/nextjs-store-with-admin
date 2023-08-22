@@ -2,7 +2,7 @@
 import axios from 'axios';
 import { signIn } from 'next-auth/react'
 import bcrypt from 'bcryptjs'
-
+import { AddressSchema } from '@/common.types';
 
 const URL = `${process.env.NEXT_PUBLIC_API_URL}products/read`;
 const cartURL = `${process.env.NEXT_PUBLIC_API_URL}cart/get`;
@@ -77,6 +77,43 @@ export async function addToCart(product_id: string, quantity: number) {
         throw error;
     }
 }
+
+
+// Address Hnadlers
+export async function getAddress(email: string) {
+    try {
+        console.log("getAddress email: ", email)
+        const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}user/address/read`, {
+            email: email
+        });
+        console.log("getAddress: ", response.data)
+        // returns address if address exists, false if not
+        return response.data;
+    } catch (error) {
+        console.log(error);
+        throw error;
+    }
+}
+
+export async function updateAddress({ address, city, state, postal, phone, email }: AddressSchema) {
+    try {
+        const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}user/address/upsert`, {
+            address,
+            city,
+            state,
+            postal,
+            phone,
+            email
+        });
+        console.log("updateAddress: ", response.data)
+        // returns true if user exists, false if not
+        return response.data;
+    } catch (error) {
+        console.log(error);
+        throw error;
+    }
+}
+
 
 // Authentication
 export async function autherize(email: string, password: string) {

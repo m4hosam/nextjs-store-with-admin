@@ -26,6 +26,14 @@ export type AddressSchema = {
     email: string;
 }
 
+export type Address = {
+    address: string;
+    city: string;
+    state: string;
+    postal: string;
+    phone: string;
+}
+
 export type User = {
     name: string;
     email: string;

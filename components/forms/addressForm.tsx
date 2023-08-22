@@ -3,7 +3,8 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
-
+import { Address, AddressSchema } from "@/common.types"
+import { updateAddress } from "@/lib/actions"
 import { Button } from "@/components/ui/button"
 import {
     Form,
@@ -27,7 +28,7 @@ const FormSchema = z.object({
     state: z.string().min(2, {
         message: "state must be at least 2 characters.",
     }),
-    postalCode: z.string().min(5, {
+    postal: z.string().min(5, {
         message: "Postal Code must be at least 5 digits.",
     }),
     phone: z.string().min(11, {
@@ -35,23 +36,30 @@ const FormSchema = z.object({
     }),
 })
 
-export function AddressForm() {
+export function AddressForm({ address, city, state, postal, phone, email }: AddressSchema) {
     const form = useForm<z.infer<typeof FormSchema>>({
         resolver: zodResolver(FormSchema),
         defaultValues: {
-            address: "Addressdfsdfffffffffffffffffffffffff",
-            city: "City",
-            state: "State",
-            postalCode: "Postal Code",
-            phone: "01000000000",
+            address: address,
+            city: city,
+            state: state,
+            postal: postal,
+            phone: phone,
 
             // Add default values for other fields if needed
         },
     })
 
-    function onSubmit(data: z.infer<typeof FormSchema>) {
-        console.log(data)
-        toast.success('Information has been updated')
+    async function onSubmit(data: z.infer<typeof FormSchema>) {
+        const requestData = { ...data, email: email }
+        console.log(requestData)
+        const isUpdated = await updateAddress(requestData)
+        if (!isUpdated) {
+            toast.error('Something went wrong')
+        }
+        else {
+            toast.success('Information has been updated')
+        }
     }
 
     return (
@@ -102,7 +110,7 @@ export function AddressForm() {
                 />
                 <FormField
                     control={form.control}
-                    name="postalCode"
+                    name="postal"
                     render={({ field }) => (
                         <FormItem>
                             <FormLabel>Postal Code</FormLabel>
