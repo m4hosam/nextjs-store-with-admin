@@ -1,15 +1,18 @@
 "use client"
-
+import { useState, useEffect } from 'react'
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
-import { Address, CheckoutSchema } from "@/common.types"
+import { Address, CheckoutFormProps } from "@/common.types"
 import { updateAddress } from "@/lib/actions"
 import { Button } from "@/components/ui/button"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Label } from "@/components/ui/label"
 import { ProductCard } from "@/components/cards/productOrders"
 import { Separator } from "@/components/ui/separator";
+import { CartProps } from '@/common.types'
+import { getProductsInCart, getCartItems } from '@/lib/actions'
+
 
 import {
     Form,
@@ -44,7 +47,24 @@ const FormSchema = z.object({
     }),
 })
 
-export function CheckoutForm({ address, city, state, postal, phone, email, name }: CheckoutSchema) {
+export function CheckoutForm({ address, city, state, postal, phone, email, name }: CheckoutFormProps) {
+    const [productsInCart, setproductsInCart] = useState<CartProps[]>([])
+    const [Total, setTotal] = useState<number>(0)
+    const shippingFees = 20
+    useEffect(() => {
+        async function fetchProducts() {
+            const products = await getProductsInCart()
+            for (let i = 0; i < products.length; i++) {
+                setTotal((prev) => prev + products[i].price * products[i].quantity)
+            }
+            setproductsInCart(products)
+            // console.log(products)
+        }
+        fetchProducts()
+    }, [])
+
+
+
     const form = useForm<z.infer<typeof FormSchema>>({
         resolver: zodResolver(FormSchema),
         defaultValues: {
@@ -60,15 +80,16 @@ export function CheckoutForm({ address, city, state, postal, phone, email, name 
     })
 
     async function onSubmit(data: z.infer<typeof FormSchema>) {
-        const requestData = { ...data, email: email }
-        console.log(requestData)
-        const isUpdated = await updateAddress(requestData)
-        if (!isUpdated) {
-            toast.error('Something went wrong')
-        }
-        else {
-            toast.success('Information has been updated')
-        }
+        console.log(data)
+        // const requestData = { ...data, email: email }
+        // console.log(requestData)
+        // const isUpdated = await updateAddress(requestData)
+        // if (!isUpdated) {
+        //     toast.error('Something went wrong')
+        // }
+        // else {
+        //     toast.success('Information has been updated')
+        // }
     }
 
     return (
@@ -77,6 +98,38 @@ export function CheckoutForm({ address, city, state, postal, phone, email, name 
                 position="bottom-center"
                 reverseOrder={false}
             />
+            <div className="w-full p-14 bg-gray-100 lg:w-1/2 ">
+
+                <h1 className=" text-slate-900 text-2xl font-medium mb-5">Order Summary</h1>
+                {productsInCart.map((product) => (
+                    <ProductCard
+                        key={product.product_id}
+                        product_id={product.product_id}
+                        name={product.name}
+                        brand={product.brand}
+                        price={product.price}
+                        category={product.category}
+                        image={product.image}
+                        quantity={product.quantity}
+                    />
+
+                ))}
+
+
+                <div className="flex flex-row w-full justify-between mb-5">
+                    <p className="text-slate-700 text-xl font-medium">SubTotal</p>
+                    <p className="text-slate-900 text-xl font-medium">{Total} LE</p>
+                </div>
+                <div className="flex flex-row w-full justify-between">
+                    <p className="text-slate-700 text-xl font-medium">Shipping</p>
+                    <p className="text-slate-900 text-xl font-medium">{shippingFees} LE</p>
+                </div>
+                <Separator className="my-4" />
+                <div className="flex flex-row w-full justify-between">
+                    <p className="text-slate-700 text-xl font-medium">Total</p>
+                    <p className="text-slate-900 text-xl font-medium">{Total + shippingFees} LE</p>
+                </div>
+            </div>
             <form onSubmit={form.handleSubmit(onSubmit)} className="block w-full md:w-1/2 space-y-6 mb-7 p-7">
                 <h2 className="text-2xl font-medium">Personal Data</h2>
                 <FormField

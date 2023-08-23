@@ -29,7 +29,7 @@ export default function Cart() {
                             product_id={product.product_id}
                             name={product.name}
                             brand={product.brand}
-                            price={`${product.price} EGP`}
+                            price={product.price}
                             category={product.category}
                             image={product.image}
                             quantity={product.quantity}

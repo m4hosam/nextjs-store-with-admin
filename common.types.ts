@@ -1,14 +1,8 @@
-// import { User, Session } from 'next-auth'
-
-// export interface SessionInterface extends Session {
-//     user: User & {
-//         id: string;
-//         name: string;
-//         email: string;
-//         avatarUrl: string;
-//     };
-// }
-
+export interface OrderItem {
+    product_id: string;
+    quantity: number;
+    price: number;
+}
 
 
 export type loginSchema = {
@@ -17,6 +11,18 @@ export type loginSchema = {
 }
 
 export type CheckoutSchema = {
+    name: string;
+    email: string;
+    phone: string;
+    address: string;
+    city: string;
+    state: string;
+    postal: string;
+    total: number;
+    order_items: OrderItem[];
+}
+
+export type CheckoutFormProps = {
     name: string;
     email: string;
     phone: string;
@@ -64,7 +70,7 @@ export type CartProps = {
     product_id: string,
     name: string,
     brand: string;
-    price: string;
+    price: number;
     image: string;
     category: string;
     quantity: number;
@@ -95,3 +101,6 @@ export type productSchema = {
     image: string;
     stock_price: number;
 };
+
+
+

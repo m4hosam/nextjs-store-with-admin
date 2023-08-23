@@ -12,16 +12,17 @@ datasource db {
 }
 
 model Products {
-  id          String   @id @default(uuid())
+  id          String       @id @default(uuid())
   name        String
   brand       String
   category    String
   price       Decimal
   image       String
   stock_price Decimal
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
   Cart        Cart[]
+  OrderItems  OrderItems[]
 }
 
 model Cart {
@@ -45,6 +46,7 @@ model User {
   createdAt DateTime    @default(now())
   updatedAt DateTime    @updatedAt
   Addresses Addresses[]
+  Order     Order[]
 }
 
 model Addresses {
@@ -58,6 +60,35 @@ model Addresses {
   user_id   String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  Order     Order[]
 
   @@index([user_id], name: "userIdIndex")
+}
+
+model OrderItems {
+  id         String   @id @default(uuid())
+  order      Order    @relation(fields: [order_id], references: [id])
+  order_id   String
+  product    Products @relation(fields: [product_id], references: [id])
+  product_id String
+  quantity   Int
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([order_id])
+  @@index([product_id])
+}
+
+model Order {
+  id         String       @id @default(uuid())
+  user       User         @relation(fields: [user_id], references: [id])
+  user_id    String
+  address    Addresses    @relation(fields: [address_id], references: [id])
+  address_id String
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt
+  OrderItems OrderItems[]
+
+  @@index([user_id])
+  @@index([address_id])
 }

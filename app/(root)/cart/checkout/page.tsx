@@ -7,33 +7,29 @@ import { getAddress, getCartItems } from "@/lib/actions";
 import { ProductCard } from "@/components/cards/productOrders"
 import { Separator } from "@/components/ui/separator";
 
+
+
 export default async function Checkout() {
-    // const session = await getServerSession(authOptions)
-    // if (!session) {
-    //     redirect('/account/login')
-    // }
-    // const email = session.user?.email || ""
-    // // console.log("session-----address-----", session)
-    // const UserAddress = await getAddress(email as string)
-    // // console.log("UserAddress-------------------------------------", UserAddress)
-    // if (!UserAddress) {
-    //     redirect('/notfound')
-    // }
-    // <AddressForm
-    //                 address={UserAddress.address}
-    //                 city={UserAddress.city}
-    //                 state={UserAddress.state}
-    //                 postal={UserAddress.postal}
-    //                 phone={UserAddress.phone}
-    //                 email={email}
-    //             />
+    const session = await getServerSession(authOptions)
+    if (!session) {
+        redirect('/account/login')
+    }
+    const name = session.user?.name || ""
+    const email = session.user?.email || ""
+    // console.log("session-----address-----", session)
+    const UserAddress = await getAddress(email)
+    // console.log("UserAddress-------------------------------------", UserAddress)
+    if (!UserAddress) {
+        redirect('/notfound')
+    }
+
 
     return (
         <div className="flex flex-1 w-full flex-col justify-center items-center px-6 py-12 lg:px-8">
 
-            <h1 className="text-center  text-slate-900 text-3xl mb-10">Checkout</h1>
-            <div className="flex flex-col md:flex-row-reverse justify-between w-full items-stretch border border-slate-300 rounded-md">
-                <div className="w-full p-14 bg-gray-100 md:w-1/2 ">
+            <h1 className="text-center  text-slate-900 text-3xl font-medium mb-10">Checkout</h1>
+            <div className="flex flex-col lg:flex-row-reverse justify-between w-full items-stretch border border-slate-300 rounded-md">
+                {/* <div className="w-full p-14 bg-gray-100 md:w-1/2 ">
 
                     <h1 className=" text-slate-900 text-2xl font-medium mb-5">Order Summary</h1>
                     <ProductCard
@@ -67,17 +63,17 @@ export default async function Checkout() {
                         <p className="text-slate-700 text-xl font-medium">Total</p>
                         <p className="text-slate-900 text-xl font-medium">600 LE</p>
                     </div>
-                </div>
+                </div> */}
 
 
                 <CheckoutForm
-                    name="Mohamed"
-                    email="sgdfjds@ksldf.com"
-                    phone="12345892634"
-                    address="sdfsdfds"
-                    city="Sdfwe"
-                    state="ewf"
-                    postal="15648"
+                    name={name}
+                    address={UserAddress.address}
+                    city={UserAddress.city}
+                    state={UserAddress.state}
+                    postal={UserAddress.postal}
+                    phone={UserAddress.phone}
+                    email={email}
                 />
 
 

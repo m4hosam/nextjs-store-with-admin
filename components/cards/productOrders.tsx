@@ -18,15 +18,15 @@ export const ProductCard = ({ name, brand, image, price, category, quantity }: C
                 <div className="ml-4 flex w-full justify-between">
                     <div className="mt-0 flex flex-col justify-between">
                         <div>
-                            <h2 className="text-xl font-bold text-gray-900">{name}</h2>
-                            <p className="mt-1 text-base font-medium text-slate-600">{brand}</p>
-                            <p className="mt-3 text-base font-medium text-slate-500">quantity: {quantity}</p>
+                            <h2 className="text-base font-bold text-gray-900">{name}</h2>
+                            <p className="mt-1 text-sm font-medium text-slate-600">{brand}</p>
                         </div>
+                        <p className="mt-3 text-base font-medium text-emerald-600">{quantity} Items</p>
                     </div>
                     <div className=" justify-between im space-y-6 mt-0 block space-x-6">
 
                         <div className="flex items-center space-x-4">
-                            <p className="text-lg font-bold">{price} LE</p>
+                            <p className="text-lg font-bold w-20 text-left text-sky-700">{price} LE</p>
                         </div>
                     </div>
                 </div>
