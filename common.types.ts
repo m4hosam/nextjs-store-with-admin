@@ -16,6 +16,15 @@ export type loginSchema = {
     password: string;
 }
 
+export type CheckoutSchema = {
+    name: string;
+    email: string;
+    phone: string;
+    address: string;
+    city: string;
+    state: string;
+    postal: string;
+}
 
 export type AddressSchema = {
     address: string;
@@ -25,6 +34,7 @@ export type AddressSchema = {
     phone: string;
     email: string;
 }
+
 
 export type Address = {
     address: string;

@@ -1,4 +1,4 @@
-import { Card } from "@/components/card";
+import { Card } from "@/components/cards/card";
 import { SearchBar } from "@/components/ui/searchBar";
 import { productSchema } from "@/common.types";
 import { getProducts } from "@/lib/actions";
