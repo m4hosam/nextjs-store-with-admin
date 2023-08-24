@@ -41,6 +41,22 @@ async function readUserId(email: string) {
     }
 }
 
+async function hasAddress(user_id: string) {
+    try {
+        const address = await prisma.addresses.findMany({
+            where: {
+                user_id: user_id,
+            },
+            select: {
+                id: true,
+            },
+        });
+        return address;
+    } catch (error) {
+        return [];
+    }
+}
+
 async function updateName(user_id: string, name: string) {
     try {
         await prisma.user.update({
@@ -59,26 +75,76 @@ async function updateName(user_id: string, name: string) {
 
 async function updateAddress(user_id: string, address: string, city: string, state: string, postal: string, phone: string) {
     try {
-        await prisma.addresses.updateMany({
-            where: {
-                user_id: user_id,
-            },
+        const hasAddressResult = await hasAddress(user_id);
+        if (hasAddressResult.length === 0) {
+            const newAddress = await prisma.addresses.create({
+                data: {
+                    user_id: user_id,
+                    address: address,
+                    city: city,
+                    state: state,
+                    postal: postal,
+                    phone: phone
+                },
+            });
+            return newAddress?.id;
+        }
+        else {
+            await prisma.addresses.updateMany({
+                where: {
+                    id: hasAddressResult[0].id,
+                },
+                data: {
+                    address: address,
+                    city: city,
+                    state: state,
+                    postal: postal,
+                    phone: phone
+                },
+            });
+            return hasAddressResult[0].id;
+        }
+    } catch (error) {
+        return false;
+    }
+}
+
+async function insertOrder(user_id: string, address_id: string, total: number) {
+    try {
+        const order = await prisma.orders.create({
             data: {
-                address: address,
-                city: city,
-                state: state,
-                postal: postal,
-                phone: phone
+                address: { connect: { id: address_id } },
+                user: { connect: { id: user_id } },
+                total: total,
             },
         });
-        return true;
+        return order?.id;
     } catch (error) {
         return false;
     }
 }
 
 
-
+async function insertOrderItems(order_id: string, order_items: OrderItem[]) {
+    try {
+        // console.log('order_id', order_id);
+        // console.log('order_items', order_items);
+        await prisma.orderItems.createMany({
+            data: order_items.map((item) => {
+                return {
+                    order_id: order_id,
+                    product_id: item.product_id,
+                    quantity: item.quantity,
+                    price: item.price,
+                };
+            }),
+        });
+        return true;
+    } catch (error) {
+        // console.log('insertOrderItems Error', error);
+        return false;
+    }
+}
 
 // 5 Main Operation should be done here
 // ----check if user exists from email----
@@ -109,13 +175,33 @@ export async function POST(request: Request) {
     //     order_items);
 
     try {
-
+        const user_id = await readUserId(email);
+        if (user_id === "") {
+            return new Response(JSON.stringify({ success: "No user" }), { status: 404 });
+        }
+        const updateNameResult = await updateName(user_id, name);
+        if (!updateNameResult) {
+            return new Response(JSON.stringify({ success: "updateName Error" }), { status: 404 });
+        }
+        const updateAddressIdResult = await updateAddress(user_id, address, city, state, postal, phone);
+        if (!updateAddressIdResult) {
+            return new Response(JSON.stringify({ success: "updateAddress Error" }), { status: 404 });
+        }
+        const order_id = await insertOrder(user_id, updateAddressIdResult, total);
+        if (!order_id) {
+            return new Response(JSON.stringify({ success: "insertOrder Error" }), { status: 404 });
+        }
+        const insertOrderItemsResult = await insertOrderItems(order_id, order_items);
+        if (!insertOrderItemsResult) {
+            return new Response(JSON.stringify({ success: "insertOrderItems Error" }), { status: 404 });
+        }
+        // delete the cart items from db
 
         return new Response(JSON.stringify({ success: true }), { status: 200 });
     }
     catch (error) {
-        console.log('isThereACookie database Error');
-        return new Response(JSON.stringify({ success: false }), { status: 500 });
+        console.log('cart checkout route Error');
+        return new Response(JSON.stringify({ success: 'cart checkout route Error' }), { status: 500 });
     }
 
 }

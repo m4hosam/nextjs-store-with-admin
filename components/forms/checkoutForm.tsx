@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react'
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
-import { Address, CheckoutFormProps } from "@/common.types"
+import { Address, CheckoutFormProps, CheckoutSchema } from "@/common.types"
 import { updateAddress } from "@/lib/actions"
 import { Button } from "@/components/ui/button"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
@@ -11,7 +11,7 @@ import { Label } from "@/components/ui/label"
 import { ProductCard } from "@/components/cards/productOrders"
 import { Separator } from "@/components/ui/separator";
 import { CartProps } from '@/common.types'
-import { getProductsInCart, getCartItems } from '@/lib/actions'
+import { getProductsInCart, createCheckoutOrder } from '@/lib/actions'
 
 
 import {
@@ -80,16 +80,28 @@ export function CheckoutForm({ address, city, state, postal, phone, email, name 
     })
 
     async function onSubmit(data: z.infer<typeof FormSchema>) {
-        console.log(data)
-        // const requestData = { ...data, email: email }
-        // console.log(requestData)
-        // const isUpdated = await updateAddress(requestData)
-        // if (!isUpdated) {
-        //     toast.error('Something went wrong')
-        // }
-        // else {
-        //     toast.success('Information has been updated')
-        // }
+        const order_items = productsInCart.map((product) => {
+            return {
+                product_id: product.product_id,
+                quantity: product.quantity,
+                price: Number(product.price)
+            }
+        })
+        const order = {
+            ...data,
+            email: email,
+            total: Total + shippingFees,
+            order_items: order_items,
+        }
+        console.log(order)
+        const createOrderResult = await createCheckoutOrder(order as CheckoutSchema)
+        console.log(createOrderResult)
+        if (createOrderResult.success) {
+            toast.success('Information has been updated')
+        }
+        else {
+            toast.error('Something went wrong')
+        }
     }
 
     return (

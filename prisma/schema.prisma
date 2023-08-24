@@ -46,7 +46,7 @@ model User {
   createdAt DateTime    @default(now())
   updatedAt DateTime    @updatedAt
   Addresses Addresses[]
-  Order     Order[]
+  Order     Orders[]
 }
 
 model Addresses {
@@ -60,18 +60,19 @@ model Addresses {
   user_id   String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  Order     Order[]
+  Order     Orders[]
 
   @@index([user_id], name: "userIdIndex")
 }
 
 model OrderItems {
   id         String   @id @default(uuid())
-  order      Order    @relation(fields: [order_id], references: [id])
+  order      Orders   @relation(fields: [order_id], references: [id])
   order_id   String
   product    Products @relation(fields: [product_id], references: [id])
   product_id String
   quantity   Int
+  price      Decimal
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
 
@@ -79,12 +80,13 @@ model OrderItems {
   @@index([product_id])
 }
 
-model Order {
+model Orders {
   id         String       @id @default(uuid())
   user       User         @relation(fields: [user_id], references: [id])
   user_id    String
   address    Addresses    @relation(fields: [address_id], references: [id])
   address_id String
+  total      Decimal
   createdAt  DateTime     @default(now())
   updatedAt  DateTime     @updatedAt
   OrderItems OrderItems[]
