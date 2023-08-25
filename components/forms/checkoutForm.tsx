@@ -98,6 +98,7 @@ export function CheckoutForm({ address, city, state, postal, phone, email, name 
         console.log(createOrderResult)
         if (createOrderResult.success) {
             toast.success('Information has been updated')
+            // redirect to orders page
         }
         else {
             toast.error('Something went wrong')
