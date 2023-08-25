@@ -20,7 +20,7 @@ export default async function Orders() {
     // console.log("orders", orders[0].OrderItems)
 
     return (
-        <main className="w-full p-20 ">
+        <main className="w-full p-5 md:p-20 ">
             <h1 className="text-2xl font-medium	text-current text-center">Orders</h1>
             {
                 orders.map((order) => (
