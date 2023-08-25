@@ -39,19 +39,9 @@ export async function POST(request: Request) {
         }
         const orders = await prisma.orders.findMany({
             select: {
+                id: true,
                 total: true,
-                user: {
-                    select: {
-                        name: true,
-                    },
-                },
-                address: {
-                    select: {
-                        address: true,
-                        city: true,
-                        state: true,
-                    },
-                },
+                address: true,
                 OrderItems: {
                     select: {
                         price: true,
@@ -60,6 +50,8 @@ export async function POST(request: Request) {
                             select: {
                                 name: true,
                                 brand: true,
+                                image: true,
+
                             },
                         },
                     },

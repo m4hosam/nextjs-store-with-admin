@@ -60,7 +60,6 @@ model Addresses {
   user_id   String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  Order     Orders[]
 
   @@index([user_id], name: "userIdIndex")
 }
@@ -84,13 +83,11 @@ model Orders {
   id         String       @id @default(uuid())
   user       User         @relation(fields: [user_id], references: [id])
   user_id    String
-  address    Addresses    @relation(fields: [address_id], references: [id])
-  address_id String
+  address    String
   total      Decimal
   createdAt  DateTime     @default(now())
   updatedAt  DateTime     @updatedAt
   OrderItems OrderItems[]
 
   @@index([user_id])
-  @@index([address_id])
 }

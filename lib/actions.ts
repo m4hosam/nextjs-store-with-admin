@@ -130,6 +130,21 @@ export async function createCheckoutOrder(checkoutData: CheckoutSchema) {
     }
 }
 
+export async function getOrders(email: string) {
+    try {
+        const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}user/orders`, {
+            email: email
+        });
+        // console.log("getOrders: ", response.data[0].OrderItems)
+        // returns true if user exists, false if not
+        return response.data;
+    } catch (error) {
+        console.log(error);
+        throw error;
+    }
+}
+
+
 
 // Authentication
 export async function autherize(email: string, password: string) {

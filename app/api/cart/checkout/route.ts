@@ -87,7 +87,7 @@ async function updateAddress(user_id: string, address: string, city: string, sta
                     phone: phone
                 },
             });
-            return newAddress?.id;
+            return true;
         }
         else {
             await prisma.addresses.updateMany({
@@ -102,18 +102,18 @@ async function updateAddress(user_id: string, address: string, city: string, sta
                     phone: phone
                 },
             });
-            return hasAddressResult[0].id;
+            return true;
         }
     } catch (error) {
         return false;
     }
 }
 
-async function insertOrder(user_id: string, address_id: string, total: number) {
+async function insertOrder(user_id: string, address: string, total: number) {
     try {
         const order = await prisma.orders.create({
             data: {
-                address: { connect: { id: address_id } },
+                address: address,
                 user: { connect: { id: user_id } },
                 total: total,
             },
@@ -173,6 +173,7 @@ export async function POST(request: Request) {
     //     postal,
     //     total,
     //     order_items);
+    const addressForOrder = `${address}, ${city}, ${state}, ${postal}`;
 
     try {
         const user_id = await readUserId(email);
@@ -183,11 +184,11 @@ export async function POST(request: Request) {
         if (!updateNameResult) {
             return new Response(JSON.stringify({ success: "updateName Error" }), { status: 404 });
         }
-        const updateAddressIdResult = await updateAddress(user_id, address, city, state, postal, phone);
-        if (!updateAddressIdResult) {
+        const updateAddressResult = await updateAddress(user_id, address, city, state, postal, phone);
+        if (!updateAddressResult) {
             return new Response(JSON.stringify({ success: "updateAddress Error" }), { status: 404 });
         }
-        const order_id = await insertOrder(user_id, updateAddressIdResult, total);
+        const order_id = await insertOrder(user_id, addressForOrder, total);
         if (!order_id) {
             return new Response(JSON.stringify({ success: "insertOrder Error" }), { status: 404 });
         }

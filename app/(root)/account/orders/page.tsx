@@ -2,59 +2,46 @@
 import React from "react";
 
 import { ProfileLinks } from "@/components/ui/profileLinks";
-import {
-    Accordion,
-    AccordionContent,
-    AccordionItem,
-    AccordionTrigger,
-} from "@/components/ui/accordion"
-
-import {
-    Table,
-    TableBody,
-    TableCaption,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow,
-} from "@/components/ui/table"
+import { authOptions } from "@/lib/session";
+import { getServerSession } from "next-auth/next"
+import { OrdersCard } from "@/components/cards/ordersCard";
+import { getOrders } from "@/lib/actions";
+import { redirect } from "next/navigation"
+import { SimpleOrder } from "@/common.types";
 
 
 export default async function Orders() {
+    const session = await getServerSession(authOptions)
 
+    if (!session) {
+        redirect('/account/login')
+    }
+    const orders = await getOrders(session.user?.email || "") as SimpleOrder[]
+    // console.log("orders", orders[0].OrderItems)
 
     return (
-
-        <div className="w-full p-20">
+        <main className="w-full p-20 ">
             <h1 className="text-2xl font-medium	text-current text-center">Orders</h1>
-            <Accordion type="single" collapsible className="w-full">
-                <AccordionItem value="item-1">
-                    <Table>
-                        <TableCaption>Orders</TableCaption>
-                        <TableHeader>
-                            <TableRow>
-                                <TableHead className="w-[100px]">Order Id</TableHead>
-                                <TableHead>Order Placed</TableHead>
-                                <TableHead>Total</TableHead>
-                                <TableHead className="text-right">Address</TableHead>
-                                <TableHead className="text-right">Details</TableHead>
-                            </TableRow>
-                        </TableHeader>
-                        <TableBody>
-                            <TableRow >
+            {
+                orders.map((order) => (
+                    <OrdersCard
+                        key={order.id}
+                        id="1"
+                        createdAt={order.createdAt}
+                        total={order.total}
+                        address={order.address}
+                        OrderItems={order.OrderItems}
+                    />
+                ))
+            }
+            {/* <OrdersCard
+                createdAt={orders[0].createdAt}
+                total={orders[0].total}
+                address={orders[0].address}
+                OrderItems={orders[0].OrderItems}
+            /> */}
 
-                                <TableCell className="font-medium">#23566</TableCell>
-                                <TableCell>June 16, 2023</TableCell>
-                                <TableCell>258</TableCell>
-                                <TableCell className="text-right">Giza, Cairo</TableCell>
-                                <TableCell className="text-right">V</TableCell>
+        </main>
 
-                            </TableRow>
-
-                        </TableBody>
-                    </Table>
-                </AccordionItem>
-            </Accordion>
-        </div>
     )
 }

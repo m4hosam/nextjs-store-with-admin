@@ -31,7 +31,7 @@ export const ProductCard = ({ name, brand, image, price, category, quantity }: C
                     </div>
                 </div>
             </div>
-            <Separator className="my-4" />
+            <Separator className="mt-4" />
         </div>
     );
 }

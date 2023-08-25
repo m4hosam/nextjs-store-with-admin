@@ -5,6 +5,7 @@ import { CartProps } from '@/common.types'
 import { getProductsInCart, getCartItems } from '@/lib/actions'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
+import Link from 'next/link'
 
 export default function Cart() {
     const [productsInCart, setproductsInCart] = useState<CartProps[]>([])
@@ -63,7 +64,8 @@ export default function Cart() {
                             <p className="text-sm text-gray-700">including VAT</p>
                         </div>
                     </div>
-                    <button className="mt-6 w-full rounded-md bg-blue-500 py-1.5 font-medium text-blue-50 hover:bg-blue-600">Check out</button>
+
+                    <Link href="/cart/checkout" className="mt-6 w-full rounded-md bg-blue-500 py-1.5 font-medium text-blue-50 hover:bg-blue-600">Check out</Link>
                 </div>
             </div>
         </div>

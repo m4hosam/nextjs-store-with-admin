@@ -1,3 +1,39 @@
+import { type } from "os";
+
+
+// Orders Page
+interface simpleProduct {
+    name: string;
+    brand: string;
+    image: string;
+}
+interface SimpleOrderItem {
+    price: string;
+    quantity: number;
+    product: simpleProduct;
+}
+
+// interface SimpleAddress {
+//     address: string;
+//     city: string;
+//     state: string;
+//     phone: string;
+// }
+
+export type SimpleOrder = {
+    id: string;
+    total: string;
+    address: string;
+    OrderItems: SimpleOrderItem[];
+    createdAt: Date;
+}
+
+
+
+
+
+
+
 export interface OrderItem {
     product_id: string;
     quantity: number;
