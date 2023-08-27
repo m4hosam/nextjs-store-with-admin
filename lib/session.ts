@@ -68,26 +68,28 @@ export const authOptions: NextAuthOptions = {
     },
     callbacks: {
         async session({ session }) {
-            // const email = session?.user?.email as string;
+            const email = session?.user?.email as string;
 
 
-            // try {
-            //     const data = await getUser(email) as { user?: UserProfile }
-            // Here i changed the name of the user to the id of the user
-            // const newSession = {
-            //     ...session,
-            //     user: {
-            //         ...session.user,
-            //         name: "525689",
-            //     },
-            // };
+            try {
+                const data = await getUser(email)
+                console.log("data in session: ", data)
+                // Here i changed the name of the user to the id of the user
+                const newSession = {
+                    ...session,
+                    user: {
+                        ...session.user,
+                        id: data.id,
+                        name: data.name,
+                        email: data.email,
+                    },
+                };
 
-            // return newSession;
-            // } catch (error: any) {
-            //     console.error("Error retrieving user data: ", error.message);
-            //     return session;
-            // }
-            return session;
+                return newSession;
+            } catch (error: any) {
+                console.error("Error retrieving user data: ", error.message);
+                return session;
+            }
         },
         async signIn({ user }: {
             user: AdapterUser | User

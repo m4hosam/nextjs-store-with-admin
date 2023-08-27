@@ -33,7 +33,7 @@ export async function POST(request: Request) {
         }
         else {
 
-            return new Response(JSON.stringify(true), { status: 200 });
+            return new Response(JSON.stringify(user), { status: 200 });
         }
 
         // Return the user in the response

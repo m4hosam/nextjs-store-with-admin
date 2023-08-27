@@ -176,6 +176,7 @@ export async function getUser(email: string) {
     }
 }
 
+
 export async function createUser(email: string, password: string, name: string) {
     // password should be hashed before calling this function
     try {

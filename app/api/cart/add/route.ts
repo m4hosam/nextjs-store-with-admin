@@ -3,6 +3,9 @@ import { CartSchema } from '@/common.types';
 import { cookies } from 'next/headers'
 import { type } from 'os';
 import { nanoid } from 'nanoid';
+import { getToken } from "next-auth/jwt"
+
+const secret = process.env.NEXTAUTH_SECRET
 
 type Cookie = {
     name: string
@@ -100,7 +103,8 @@ export async function POST(request: Request) {
     const cartCookie = cookieList.get('cart');
     console.log('product_id', product_id);
     console.log('quantity', quantity);
-
+    // const token = await getToken({ request, secret })
+    // console.log("JSON Web Token", token)
     // Check if the cookie exists
     const isThereACookie = await hasCookie();
 
