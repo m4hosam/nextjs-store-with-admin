@@ -1,6 +1,6 @@
 import prisma from '@/lib/prismadb';
 import { CheckoutSchema, OrderItem } from '@/common.types';
-
+import { cookies } from 'next/headers'
 
 // {
 //     "name": "Mohamed",
@@ -146,6 +146,28 @@ async function insertOrderItems(order_id: string, order_items: OrderItem[]) {
     }
 }
 
+
+async function deleteCartItems(cartCookie: string, user_id: string) {
+    try {
+        await prisma.cart.deleteMany({
+            where: {
+                cookie_id: cartCookie,
+            },
+        });
+        await prisma.user.update({
+            where: {
+                id: user_id,
+            },
+            data: {
+                cookie_id: "",
+            },
+        });
+        return true;
+    } catch (error) {
+        return false;
+    }
+}
+
 // 5 Main Operation should be done here
 // ----check if user exists from email----
 // 1- Update Name in user table
@@ -154,6 +176,8 @@ async function insertOrderItems(order_id: string, order_items: OrderItem[]) {
 // 4- Insert Order Items in order_items table [order_id,product_id,quantity,price]
 // 5- Delete Cart Items in cart_items table [product_id, cookie_id]
 export async function POST(request: Request) {
+    const cookieList = cookies();
+    const cartCookie = cookieList.get('cart');
     const { name,
         email,
         phone,
@@ -197,6 +221,10 @@ export async function POST(request: Request) {
             return new Response(JSON.stringify({ success: "insertOrderItems Error" }), { status: 404 });
         }
         // delete the cart items from db
+        const deleteCartItemsResult = await deleteCartItems(cartCookie?.value as string, user_id);
+        if (!deleteCartItemsResult) {
+            return new Response(JSON.stringify({ success: "deleteCartItems Error" }), { status: 404 });
+        }
 
         return new Response(JSON.stringify({ success: true }), { status: 200 });
     }
