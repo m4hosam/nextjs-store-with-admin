@@ -3,7 +3,7 @@ import { CartSchema } from '@/common.types';
 import { cookies } from 'next/headers'
 import { type } from 'os';
 import { nanoid } from 'nanoid';
-import { getToken } from "next-auth/jwt"
+import { decode } from 'next-auth/jwt';
 
 const secret = process.env.NEXTAUTH_SECRET
 
@@ -90,6 +90,39 @@ async function addNewCookie(cookie_id: any, product_id: string, quantity: number
     }
 }
 
+async function addCookieToUser(email: string, cookie_id: string) {
+    // add the cookie_id to user db
+    if (!email) {
+        return false;
+    }
+    try {
+        const user = await prisma.user.findUnique({
+            where: {
+                email: email,
+            },
+        });
+        if (!user) {
+            return false;
+        }
+        // Create a new row in the Products table using Prisma
+        const newCart = await prisma.user.update({
+            where: {
+                email: email,
+            },
+            data: {
+                cookie_id: cookie_id,
+            },
+        });
+
+        // Return the products in the response
+        console.log("Cookie had been added to user", newCart);
+        return true;
+    } catch (error) {
+        console.error('Error fetching products:', error);
+        return false;
+    }
+}
+
 
 // This route is used to create a cart item in cookies and in db
 // First we check if the cookie exists
@@ -101,6 +134,18 @@ export async function POST(request: Request) {
     const { product_id, quantity }: CartSchema = await request.json();
     const cookieList = cookies();
     const cartCookie = cookieList.get('cart');
+    const SessionCookie = cookieList.get('next-auth.session-token')?.value;
+
+    const decodedUser = await decode({
+        token: SessionCookie,
+        secret: process.env.NEXTAUTH_SECRET as string,
+    });
+
+
+    console.log('decoded email', decodedUser);
+    // if user, add user_id to the cart
+
+
     console.log('product_id', product_id);
     console.log('quantity', quantity);
     // const token = await getToken({ request, secret })
@@ -113,13 +158,25 @@ export async function POST(request: Request) {
 
             // If the cookie exists, we add the product_id and quantity to the db
             const updatedCart = await prisma.cart.updateMany({
+                // If the product_id exists, we update the quantity
                 where: { cookie_id: cartCookie?.value, product_id: product_id },
                 data: {
                     quantity: Number(quantity),
                 },
             });
             if (updatedCart.count === 0) {
+                // if the product_id doesn't exist, we create a new cart item in db
                 await addNewCookie(cartCookie?.value, product_id, quantity);
+            }
+            else if (Number(quantity) === 0) {
+                // if quantity is 0, delete the record
+                await prisma.cart.deleteMany({
+                    where: { cookie_id: cartCookie?.value, product_id: product_id },
+                });
+            }
+            if (decodedUser !== null) {
+                const cookieToUserResult = await addCookieToUser(decodedUser.email as string, cartCookie?.value as string);
+                console.log('cookieToUserResult', cookieToUserResult);
             }
 
             console.log('updated/add record');
@@ -138,6 +195,13 @@ export async function POST(request: Request) {
         cookieList.set(newCookie)
         try {
             await addNewCookie(newCookie.value, product_id, quantity);
+
+            if (decodedUser !== null) {
+                const cookieToUserResult = await addCookieToUser(decodedUser.email as string, newCookie?.value as string);
+                console.log('cookieToUserResult', cookieToUserResult);
+            }
+
+
             return new Response(JSON.stringify({ success: true }), { status: 200 });
         }
         catch (error) {

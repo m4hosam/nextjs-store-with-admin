@@ -143,7 +143,7 @@ export function CheckoutForm({ address, city, state, postal, phone, email, name 
                     <p className="text-slate-900 text-xl font-medium">{Total + shippingFees} LE</p>
                 </div>
             </div>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="block w-full md:w-1/2 space-y-6 mb-7 p-7">
+            <form onSubmit={form.handleSubmit(onSubmit)} className="block w-full lg:w-1/2 space-y-6 mb-7 p-7">
                 <h2 className="text-2xl font-medium">Personal Data</h2>
                 <FormField
                     control={form.control}

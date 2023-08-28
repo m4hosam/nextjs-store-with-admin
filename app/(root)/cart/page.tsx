@@ -25,7 +25,7 @@ export default function Cart() {
             <h1 className="mb-10 text-center text-2xl font-bold">Cart Items</h1>
             {productsInCart.length !== 0 && (
                 <div className="flex items-start flex-col w-full md:flex-row mx-auto max-w-5xl justify-center px-6 md:flex md:space-x-6 xl:px-0">
-                    <div className="rounded-lg md:w-2/3">
+                    <div className=" w-full rounded-lg md:w-2/3">
                         {productsInCart.map((product) => (
                             <CartItem
                                 key={product.product_id}
