@@ -102,6 +102,9 @@ export type CardProps = {
     price: string;
     image: string;
 };
+
+
+
 export type CartProps = {
     product_id: string,
     name: string,

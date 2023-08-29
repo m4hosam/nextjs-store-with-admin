@@ -23,9 +23,13 @@ export async function getProducts() {
 }
 
 export const getProduct = async (id: string) => {
-    const res = await fetch(`${URL}/${id}`);
-
-    return res.json();
+    try {
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}products/${id}`);
+        return response.data;
+    } catch (error) {
+        console.log(error);
+        throw error;
+    }
 }
 
 

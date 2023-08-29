@@ -53,7 +53,7 @@ export const Card = ({ id, name, brand, price, image }: CardProps) => {
                     />
                 </div>
             </Link>
-            <Link href={`/products/${brand}`}>
+            <Link href={`/products/${id}`}>
                 <h6 className="text-base text-center px-5 py-2 font-semibold tracking-tight text-slate-800 dark:text-white">
                     {brand}
                 </h6>

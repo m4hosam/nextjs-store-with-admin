@@ -8,6 +8,14 @@ export async function GET(request: Request, { params }: { params: { id: string }
         // Fetch all products from the database using Prisma
         const product = await prisma.products.findUnique({
             where: { id: params.id },
+            select: {
+                id: true,
+                name: true,
+                brand: true,
+                category: true,
+                price: true,
+                image: true,
+            }
         });
 
         if (!product) {
