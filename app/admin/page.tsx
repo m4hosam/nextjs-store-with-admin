@@ -29,7 +29,7 @@ export default async function Home() {
                 <hr className="my-5 mx-16" />
                 <br className='w-full h-7 bg-slate-500' />
 
-                <SearchBar />
+                {/* <SearchBar /> */}
 
                 <div className='flex w-full flex-row flex-wrap justify-center px-7'>
                     {

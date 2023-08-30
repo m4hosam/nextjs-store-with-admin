@@ -24,6 +24,7 @@ export type SimpleOrder = {
     id: string;
     total: string;
     address: string;
+    status: string;
     OrderItems: SimpleOrderItem[];
     createdAt: Date;
 }

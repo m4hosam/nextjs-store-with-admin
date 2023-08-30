@@ -30,6 +30,7 @@ export default async function Orders() {
                         createdAt={order.createdAt}
                         total={order.total}
                         address={order.address}
+                        status={order.status}
                         OrderItems={order.OrderItems}
                     />
                 ))

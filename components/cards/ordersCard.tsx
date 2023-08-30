@@ -13,7 +13,7 @@ import {
     TableRow,
 } from "@/components/ui/table"
 
-export const OrdersCard = ({ createdAt, total, address, OrderItems }: SimpleOrder) => {
+export const OrdersCard = ({ createdAt, total, address, status, OrderItems }: SimpleOrder) => {
     const date = new Date(createdAt)
     const currentYear = date.getFullYear();
     const currentMonth = date.getMonth() + 1;
@@ -36,7 +36,7 @@ export const OrdersCard = ({ createdAt, total, address, OrderItems }: SimpleOrde
                         <TableCell className="text-left">{orderDate}</TableCell>
                         <TableCell className="text-center">{total}</TableCell>
                         <TableCell className="text-center">{address}</TableCell>
-                        <TableCell className="text-center">On Progress !!!</TableCell>
+                        <TableCell className="text-center">{status}</TableCell>
 
                     </TableRow>
 

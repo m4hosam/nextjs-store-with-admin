@@ -42,6 +42,7 @@ export async function POST(request: Request) {
                 id: true,
                 total: true,
                 address: true,
+                status: true,
                 OrderItems: {
                     select: {
                         price: true,
