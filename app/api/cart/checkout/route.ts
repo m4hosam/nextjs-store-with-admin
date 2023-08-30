@@ -1,6 +1,7 @@
 import prisma from '@/lib/prismadb';
 import { CheckoutSchema, OrderItem } from '@/common.types';
 import { cookies } from 'next/headers'
+import { decodeAuthCookie } from '@/app/api/decodeAuth'
 
 // {
 //     "name": "Mohamed",
@@ -178,8 +179,16 @@ async function deleteCartItems(cartCookie: string, user_id: string) {
 export async function POST(request: Request) {
     const cookieList = cookies();
     const cartCookie = cookieList.get('cart');
+    const cartAuthCookie = cookieList.get('next-auth.session-token')?.value;
+    // if no decoded user return 402 unautherized
+    const email = await decodeAuthCookie(cartAuthCookie as string)
+    // console.log("Not Autherized", email)
+    if (!email) {
+        // console.log("Not Autherized")
+        return new Response(JSON.stringify({ message: "Not Autherized" }), { status: 402 });
+    }
+
     const { name,
-        email,
         phone,
         address,
         city,

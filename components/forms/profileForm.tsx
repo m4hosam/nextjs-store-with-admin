@@ -16,7 +16,7 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import toast, { Toaster } from 'react-hot-toast';
-
+import { updateUser } from "@/lib/actions";
 
 
 type props = {
@@ -43,9 +43,14 @@ export function ProfileForm(props: props) {
         },
     })
 
-    function onSubmit(data: z.infer<typeof FormSchema>) {
-        console.log(data)
-        toast.success('Information has been updated')
+    async function onSubmit(data: z.infer<typeof FormSchema>) {
+        // console.log(data)
+        const updateUserStatus = await updateUser(data.name)
+        if (updateUserStatus) {
+            toast.success('Information has been updated')
+        } else {
+            toast.error('Something went wrong')
+        }
     }
 
     return (

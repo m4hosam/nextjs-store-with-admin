@@ -13,7 +13,7 @@ export default async function Home() {
         <main>
             <section className='mt-16'>
                 <h1 className='text-3xl w-full text-center font-bold'>Products</h1>
-                <SearchBar />
+                {/* <SearchBar /> */}
                 <div className='flex w-full flex-row flex-wrap justify-center px-7'>
                     {
                         products?.map((product: { id: string; name: string; brand: string; price: string; image: string; }, index: Key | null | undefined) => (

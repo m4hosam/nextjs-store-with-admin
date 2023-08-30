@@ -199,6 +199,21 @@ export async function createUser(email: string, password: string, name: string) 
     }
 }
 
+export async function updateUser(name: string) {
+    // password should be hashed before calling this function
+    try {
+        const response = await axios.put(`${process.env.NEXT_PUBLIC_API_URL}user/update`, {
+            name
+        });
+        console.log("createUser status: ", response.data.success)
+        return response.data.success;
+    } catch (error) {
+        console.log(error);
+        throw error;
+    }
+}
+
+
 
 export async function login(email: string, password: string) {
     const hashedPassword = bcrypt.hashSync(password, "$2a$10$QwS47P5iOzOxQclE1Fj7x.")
