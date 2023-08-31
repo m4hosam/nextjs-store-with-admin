@@ -92,7 +92,7 @@ export async function getOrder(id: string) {
 export async function updateOrder(id: string, order: orderUpdateAdmin) {
     try {
         const response = await axios.put(`${ordersURL}/${id}`, order);
-        return response.data;
+        return response.data?.success;
     } catch (error) {
         console.log(error);
         throw error;

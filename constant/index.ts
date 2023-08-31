@@ -11,6 +11,12 @@ export const categoryFilters = [
     "accessory",
     "wallets",
 ]
+export const orderStatusFilters = [
+    "Pending",
+    "On Progress",
+    "Canceled",
+    "Delivered",
+]
 
 export const footerLinks = [
     {

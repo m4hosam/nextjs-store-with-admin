@@ -26,7 +26,7 @@ import prisma from '@/lib/prismadb';
 export async function GET(request: Request, { params }: { params: { id: string } }) {
 
     try {
-        const order = await prisma.orders.findMany({
+        const order = await prisma.orders.findFirst({
             where: {
                 id: params.id
             },
