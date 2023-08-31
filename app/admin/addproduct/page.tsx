@@ -7,11 +7,20 @@ import Image from "next/image"
 import { ProductPropsAdmin } from '@/common.types';
 import { categoryFilters } from '@/constant';
 import CustomMenu from '@/components/ui/customMenu';
+import { createProduct } from '@/lib/actionAdmin'
 
 
 export default function AddProduct() {
     // State variable to track the visibility of the alert
     const [isAlertVisible, setIsAlertVisible] = useState(false);
+    const [form, setform] = useState<ProductPropsAdmin>({
+        productName: '',
+        category: '',
+        price: '',
+        image: '',
+        stock_price: '',
+        brand: '',
+    })
 
     const handleAlertClose = (e: React.MouseEvent<HTMLButtonElement>) => {
         // Hide the alert
@@ -24,11 +33,7 @@ export default function AddProduct() {
         // Send form object to backend
         try {
             // Send form object to backend using fetch
-            const response = await fetch('/api/admin/products/create', {
-                method: 'POST',
-                body: JSON.stringify(form),
-
-            });
+            const response = await createProduct(form)
 
             if (!response.ok) {
                 // Handle any error scenarios if needed
@@ -80,14 +85,7 @@ export default function AddProduct() {
     }
 
 
-    const [form, setform] = useState<ProductPropsAdmin>({
-        productName: '',
-        category: '',
-        price: '',
-        image: '',
-        stock_price: '',
-        brand: '',
-    })
+
 
     return (
         <form

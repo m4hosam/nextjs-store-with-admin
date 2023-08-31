@@ -47,6 +47,10 @@ export async function DELETE(request: Request, { params }: { params: { id: strin
 
 export async function PUT(request: Request, { params }: { params: { id: string } }) {
     const { productName, brand, category, stock_price, image, price }: ProductPropsAdmin = await request.json();
+    // Error with updating image. Need to fix
+
+    // Convert the Data URL to a buffer
+
 
     // The name of the image shouldn't contain % sign
 
@@ -61,6 +65,7 @@ export async function PUT(request: Request, { params }: { params: { id: string }
 
     // Save the image to the file system
     fs.writeFileSync(filePath, imageBuffer);
+
 
 
 

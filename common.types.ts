@@ -132,6 +132,20 @@ export type ProductPropsAdmin = {
     stock_price: string;
 };
 
+export type orderGetPropsAdmin = {
+    id: string;
+    total: string;
+    address: string;
+    status: string;
+    createdAt: string;
+};
+
+export type orderUpdateAdmin = {
+    total: string;
+    address: string;
+    status: string;
+};
+
 export type productSchema = {
     id: string,
     name: string,
