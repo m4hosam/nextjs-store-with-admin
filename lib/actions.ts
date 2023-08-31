@@ -11,6 +11,21 @@ const cartURL = `${process.env.NEXT_PUBLIC_API_URL}cart/get`;
 const cartItemsURL = `${process.env.NEXT_PUBLIC_API_URL}cart/getall`;
 const cartItemsNumber = `${process.env.NEXT_PUBLIC_API_URL}cart/count`;
 
+// /api/products / read
+//     / api / cart / get
+//     / api / cart / getall
+//     / api / cart / add
+//     / api / cart / checkout
+//     / api / user / address / read
+//     / api / user / address / upsert
+//     / api / user / orders
+//     / api / user / autherize
+//     / api / user / read
+//     / api / user / create
+//     / api / user / update
+//     / api / cart / linktouser
+
+
 export async function getProducts() {
     try {
         const response = await axios.get(URL);

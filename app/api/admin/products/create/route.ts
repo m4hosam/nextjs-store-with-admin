@@ -2,14 +2,14 @@ import fs from 'fs';
 import path from 'path';
 import dataUriToBuffer from 'data-uri-to-buffer';
 import prisma from '@/lib/prismadb';
-import { FormState } from '@/common.types';
+import { ProductPropsAdmin } from '@/common.types';
 
 
 
 
 
 export async function POST(request: Request) {
-    const { productName, brand, category, stock_price, image, price }: FormState = await request.json();
+    const { productName, brand, category, stock_price, image, price }: ProductPropsAdmin = await request.json();
 
     // The name of the image shouldn't contain % sign
 
@@ -45,9 +45,6 @@ export async function POST(request: Request) {
     } catch (error) {
         console.error('Error fetching products:', error);
         return new Response(JSON.stringify({ success: false }), { status: 500 });
-    } finally {
-        // Don't forget to close the Prisma Client connection when you're done
-        await prisma.$disconnect();
     }
 
 }

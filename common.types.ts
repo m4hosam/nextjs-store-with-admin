@@ -123,7 +123,7 @@ export type CartSchema = {
     quantity: number;
 }
 
-export type FormState = {
+export type ProductPropsAdmin = {
     productName: string;
     brand: string;
     category: string;

@@ -11,7 +11,8 @@ import {
 } from "@/components/ui/table"
 
 
-export default function Sales() {
+export default function Orders() {
+
     return (
         <main className="p-14">
             <Table>

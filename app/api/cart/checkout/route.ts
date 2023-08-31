@@ -211,28 +211,28 @@ export async function POST(request: Request) {
     try {
         const user_id = await readUserId(email);
         if (user_id === "") {
-            return new Response(JSON.stringify({ success: "No user" }), { status: 404 });
+            return new Response(JSON.stringify({ success: false, message: "No user" }), { status: 404 });
         }
         const updateNameResult = await updateName(user_id, name);
         if (!updateNameResult) {
-            return new Response(JSON.stringify({ success: "updateName Error" }), { status: 404 });
+            return new Response(JSON.stringify({ success: false, message: "updateName Error" }), { status: 404 });
         }
         const updateAddressResult = await updateAddress(user_id, address, city, state, postal, phone);
         if (!updateAddressResult) {
-            return new Response(JSON.stringify({ success: "updateAddress Error" }), { status: 404 });
+            return new Response(JSON.stringify({ success: false, message: "updateAddress Error" }), { status: 404 });
         }
         const order_id = await insertOrder(user_id, addressForOrder, total);
         if (!order_id) {
-            return new Response(JSON.stringify({ success: "insertOrder Error" }), { status: 404 });
+            return new Response(JSON.stringify({ success: false, message: "insertOrder Error" }), { status: 404 });
         }
         const insertOrderItemsResult = await insertOrderItems(order_id, order_items);
         if (!insertOrderItemsResult) {
-            return new Response(JSON.stringify({ success: "insertOrderItems Error" }), { status: 404 });
+            return new Response(JSON.stringify({ success: false, message: "insertOrderItems Error" }), { status: 404 });
         }
         // delete the cart items from db
         const deleteCartItemsResult = await deleteCartItems(cartCookie?.value as string, user_id);
         if (!deleteCartItemsResult) {
-            return new Response(JSON.stringify({ success: "deleteCartItems Error" }), { status: 404 });
+            return new Response(JSON.stringify({ success: false, message: "deleteCartItems Error" }), { status: 404 });
         }
 
         return new Response(JSON.stringify({ success: true }), { status: 200 });

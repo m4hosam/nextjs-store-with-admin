@@ -38,6 +38,9 @@ export async function POST(request: Request) {
             return new Response(JSON.stringify({ success: false, message: 'User does not exist' }), { status: 200 });
         }
         const orders = await prisma.orders.findMany({
+            where: {
+                user_id: userId
+            },
             select: {
                 id: true,
                 total: true,
