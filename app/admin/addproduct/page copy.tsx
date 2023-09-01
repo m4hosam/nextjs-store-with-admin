@@ -44,15 +44,6 @@ export default function AddProduct() {
                 // toggle the alert to hidden
                 toast.error('An Error Occured')
             }
-            setform({
-                productName: '',
-                category: '',
-                price: '',
-                image: '',
-                stock_price: '',
-                brand: '',
-            })
-
             router.refresh();
 
         } catch (error) {
@@ -110,7 +101,6 @@ export default function AddProduct() {
                     accept='image/*'
                     className="absolute z-30 w-full opacity-0 h-full cursor-pointer"
                     onChange={(e) => handleChangeImage(e)}
-                    required
                 />
                 {form.image && (
                     <Image
